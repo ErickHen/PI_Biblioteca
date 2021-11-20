@@ -1,0 +1,894 @@
+define(['dart_sdk', 'packages/flutter/src/animation/curves.dart', 'packages/flutter/src/painting/alignment.dart', 'packages/flutter/src/widgets/widget_span.dart', 'packages/flutter/src/foundation/key.dart', 'packages/flutter/src/foundation/debug.dart', 'packages/flutter/src/animation/animation_controller.dart', 'packages/flutter/src/animation/listener_helpers.dart', 'packages/flutter/src/widgets/animated_size.dart'], (function load__packages__flutter__src__widgets__animated_cross_fade_dart(dart_sdk, packages__flutter__src__animation__curves$46dart, packages__flutter__src__painting__alignment$46dart, packages__flutter__src__widgets__widget_span$46dart, packages__flutter__src__foundation__key$46dart, packages__flutter__src__foundation__debug$46dart, packages__flutter__src__animation__animation_controller$46dart, packages__flutter__src__animation__listener_helpers$46dart, packages__flutter__src__widgets__animated_size$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const ui = dart_sdk.ui;
+  const _interceptors = dart_sdk._interceptors;
+  const _internal = dart_sdk._internal;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const curves = packages__flutter__src__animation__curves$46dart.src__animation__curves;
+  const alignment = packages__flutter__src__painting__alignment$46dart.src__painting__alignment;
+  const framework = packages__flutter__src__widgets__widget_span$46dart.src__widgets__framework;
+  const basic = packages__flutter__src__widgets__widget_span$46dart.src__widgets__basic;
+  const widget_inspector = packages__flutter__src__widgets__widget_span$46dart.src__widgets__widget_inspector;
+  const ticker_provider = packages__flutter__src__widgets__widget_span$46dart.src__widgets__ticker_provider;
+  const transitions = packages__flutter__src__widgets__widget_span$46dart.src__widgets__transitions;
+  const key = packages__flutter__src__foundation__key$46dart.src__foundation__key;
+  const diagnostics = packages__flutter__src__foundation__debug$46dart.src__foundation__diagnostics;
+  const animation_controller = packages__flutter__src__animation__animation_controller$46dart.src__animation__animation_controller;
+  const animation = packages__flutter__src__animation__listener_helpers$46dart.src__animation__animation;
+  const tween = packages__flutter__src__animation__listener_helpers$46dart.src__animation__tween;
+  const animated_size = packages__flutter__src__widgets__animated_size$46dart.src__widgets__animated_size;
+  var animated_cross_fade = Object.create(dart.library);
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    CrossFadeStateL: () => (T.CrossFadeStateL = dart.constFn(dart.legacy(animated_cross_fade.CrossFadeState)))(),
+    WidgetAndKeyAndWidget__ToWidget: () => (T.WidgetAndKeyAndWidget__ToWidget = dart.constFn(dart.fnType(framework.Widget, [framework.Widget, key.Key, framework.Widget, key.Key])))(),
+    _LocationL: () => (T._LocationL = dart.constFn(dart.legacy(widget_inspector._Location)))(),
+    JSArrayOfWidget: () => (T.JSArrayOfWidget = dart.constFn(_interceptors.JSArray$(framework.Widget)))(),
+    EnumPropertyOfCrossFadeState: () => (T.EnumPropertyOfCrossFadeState = dart.constFn(diagnostics.EnumProperty$(animated_cross_fade.CrossFadeState)))(),
+    DiagnosticsPropertyOfAlignmentGeometry: () => (T.DiagnosticsPropertyOfAlignmentGeometry = dart.constFn(diagnostics.DiagnosticsProperty$(alignment.AlignmentGeometry)))(),
+    VoidTovoid: () => (T.VoidTovoid = dart.constFn(dart.fnType(dart.void, [])))(),
+    AnimationStatusTovoid: () => (T.AnimationStatusTovoid = dart.constFn(dart.fnType(dart.void, [animation.AnimationStatus])))(),
+    TweenOfdouble: () => (T.TweenOfdouble = dart.constFn(tween.Tween$(core.double)))(),
+    ValueKeyOfCrossFadeStateL: () => (T.ValueKeyOfCrossFadeStateL = dart.constFn(key.ValueKey$(T.CrossFadeStateL())))(),
+    DiagnosticsPropertyOfAnimationController: () => (T.DiagnosticsPropertyOfAnimationController = dart.constFn(diagnostics.DiagnosticsProperty$(animation_controller.AnimationController)))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: animated_cross_fade.CrossFadeState.prototype,
+        [_name$]: "CrossFadeState.showFirst",
+        index: 0
+      });
+    },
+    get C1() {
+      return C[1] = dart.const({
+        __proto__: animated_cross_fade.CrossFadeState.prototype,
+        [_name$]: "CrossFadeState.showSecond",
+        index: 1
+      });
+    },
+    get C2() {
+      return C[2] = dart.constList([C[0] || CT.C0, C[1] || CT.C1], T.CrossFadeStateL());
+    },
+    get C3() {
+      return C[3] = dart.const({
+        __proto__: curves._Linear.prototype
+      });
+    },
+    get C4() {
+      return C[4] = dart.const({
+        __proto__: alignment.Alignment.prototype,
+        [Alignment_y]: -1,
+        [Alignment_x]: 0
+      });
+    },
+    get C5() {
+      return C[5] = dart.fn(animated_cross_fade.AnimatedCrossFade.defaultLayoutBuilder, T.WidgetAndKeyAndWidget__ToWidget());
+    },
+    get C8() {
+      return C[8] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 11,
+        [_Location_line]: 222,
+        [_Location_file]: null
+      });
+    },
+    get C9() {
+      return C[9] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "left",
+        [_Location_column]: 11,
+        [_Location_line]: 223,
+        [_Location_file]: null
+      });
+    },
+    get C10() {
+      return C[10] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "top",
+        [_Location_column]: 11,
+        [_Location_line]: 224,
+        [_Location_file]: null
+      });
+    },
+    get C11() {
+      return C[11] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "right",
+        [_Location_column]: 11,
+        [_Location_line]: 225,
+        [_Location_file]: null
+      });
+    },
+    get C12() {
+      return C[12] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 11,
+        [_Location_line]: 226,
+        [_Location_file]: null
+      });
+    },
+    get C7() {
+      return C[7] = dart.constList([C[8] || CT.C8, C[9] || CT.C9, C[10] || CT.C10, C[11] || CT.C11, C[12] || CT.C12], T._LocationL());
+    },
+    get C6() {
+      return C[6] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[7] || CT.C7,
+        [_Location_name]: null,
+        [_Location_column]: 9,
+        [_Location_line]: 221,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    },
+    get C15() {
+      return C[15] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 11,
+        [_Location_line]: 229,
+        [_Location_file]: null
+      });
+    },
+    get C16() {
+      return C[16] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 11,
+        [_Location_line]: 230,
+        [_Location_file]: null
+      });
+    },
+    get C14() {
+      return C[14] = dart.constList([C[15] || CT.C15, C[16] || CT.C16], T._LocationL());
+    },
+    get C13() {
+      return C[13] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[14] || CT.C14,
+        [_Location_name]: null,
+        [_Location_column]: 9,
+        [_Location_line]: 228,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    },
+    get C19() {
+      return C[19] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "clipBehavior",
+        [_Location_column]: 7,
+        [_Location_line]: 219,
+        [_Location_file]: null
+      });
+    },
+    get C20() {
+      return C[20] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "children",
+        [_Location_column]: 7,
+        [_Location_line]: 220,
+        [_Location_file]: null
+      });
+    },
+    get C18() {
+      return C[18] = dart.constList([C[19] || CT.C19, C[20] || CT.C20], T._LocationL());
+    },
+    get C17() {
+      return C[17] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[18] || CT.C18,
+        [_Location_name]: null,
+        [_Location_column]: 12,
+        [_Location_line]: 218,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    },
+    get C21() {
+      return C[21] = dart.const({
+        __proto__: T.ValueKeyOfCrossFadeStateL().prototype,
+        [ValueKey_value]: C[0] || CT.C0
+      });
+    },
+    get C22() {
+      return C[22] = dart.const({
+        __proto__: T.ValueKeyOfCrossFadeStateL().prototype,
+        [ValueKey_value]: C[1] || CT.C1
+      });
+    },
+    get C25() {
+      return C[25] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "opacity",
+        [_Location_column]: 11,
+        [_Location_line]: 347,
+        [_Location_file]: null
+      });
+    },
+    get C26() {
+      return C[26] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 11,
+        [_Location_line]: 348,
+        [_Location_file]: null
+      });
+    },
+    get C24() {
+      return C[24] = dart.constList([C[25] || CT.C25, C[26] || CT.C26], T._LocationL());
+    },
+    get C23() {
+      return C[23] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[24] || CT.C24,
+        [_Location_name]: null,
+        [_Location_column]: 16,
+        [_Location_line]: 346,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    },
+    get C29() {
+      return C[29] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "excluding",
+        [_Location_column]: 9,
+        [_Location_line]: 345,
+        [_Location_file]: null
+      });
+    },
+    get C30() {
+      return C[30] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 9,
+        [_Location_line]: 346,
+        [_Location_file]: null
+      });
+    },
+    get C28() {
+      return C[28] = dart.constList([C[29] || CT.C29, C[30] || CT.C30], T._LocationL());
+    },
+    get C27() {
+      return C[27] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[28] || CT.C28,
+        [_Location_name]: null,
+        [_Location_column]: 14,
+        [_Location_line]: 344,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    },
+    get C33() {
+      return C[33] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 7,
+        [_Location_line]: 342,
+        [_Location_file]: null
+      });
+    },
+    get C34() {
+      return C[34] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "enabled",
+        [_Location_column]: 7,
+        [_Location_line]: 343,
+        [_Location_file]: null
+      });
+    },
+    get C35() {
+      return C[35] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 344,
+        [_Location_file]: null
+      });
+    },
+    get C32() {
+      return C[32] = dart.constList([C[33] || CT.C33, C[34] || CT.C34, C[35] || CT.C35], T._LocationL());
+    },
+    get C31() {
+      return C[31] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[32] || CT.C32,
+        [_Location_name]: null,
+        [_Location_column]: 19,
+        [_Location_line]: 341,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    },
+    get C38() {
+      return C[38] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "opacity",
+        [_Location_column]: 11,
+        [_Location_line]: 358,
+        [_Location_file]: null
+      });
+    },
+    get C39() {
+      return C[39] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 11,
+        [_Location_line]: 359,
+        [_Location_file]: null
+      });
+    },
+    get C37() {
+      return C[37] = dart.constList([C[38] || CT.C38, C[39] || CT.C39], T._LocationL());
+    },
+    get C36() {
+      return C[36] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[37] || CT.C37,
+        [_Location_name]: null,
+        [_Location_column]: 16,
+        [_Location_line]: 357,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    },
+    get C42() {
+      return C[42] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "excluding",
+        [_Location_column]: 9,
+        [_Location_line]: 356,
+        [_Location_file]: null
+      });
+    },
+    get C43() {
+      return C[43] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 9,
+        [_Location_line]: 357,
+        [_Location_file]: null
+      });
+    },
+    get C41() {
+      return C[41] = dart.constList([C[42] || CT.C42, C[43] || CT.C43], T._LocationL());
+    },
+    get C40() {
+      return C[40] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[41] || CT.C41,
+        [_Location_name]: null,
+        [_Location_column]: 14,
+        [_Location_line]: 355,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    },
+    get C46() {
+      return C[46] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 7,
+        [_Location_line]: 353,
+        [_Location_file]: null
+      });
+    },
+    get C47() {
+      return C[47] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "enabled",
+        [_Location_column]: 7,
+        [_Location_line]: 354,
+        [_Location_file]: null
+      });
+    },
+    get C48() {
+      return C[48] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 355,
+        [_Location_file]: null
+      });
+    },
+    get C45() {
+      return C[45] = dart.constList([C[46] || CT.C46, C[47] || CT.C47, C[48] || CT.C48], T._LocationL());
+    },
+    get C44() {
+      return C[44] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[45] || CT.C45,
+        [_Location_name]: null,
+        [_Location_column]: 16,
+        [_Location_line]: 352,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    },
+    get C51() {
+      return C[51] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "alignment",
+        [_Location_column]: 9,
+        [_Location_line]: 365,
+        [_Location_file]: null
+      });
+    },
+    get C52() {
+      return C[52] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "duration",
+        [_Location_column]: 9,
+        [_Location_line]: 366,
+        [_Location_file]: null
+      });
+    },
+    get C53() {
+      return C[53] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "reverseDuration",
+        [_Location_column]: 9,
+        [_Location_line]: 367,
+        [_Location_file]: null
+      });
+    },
+    get C54() {
+      return C[54] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "curve",
+        [_Location_column]: 9,
+        [_Location_line]: 368,
+        [_Location_file]: null
+      });
+    },
+    get C55() {
+      return C[55] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "vsync",
+        [_Location_column]: 9,
+        [_Location_line]: 369,
+        [_Location_file]: null
+      });
+    },
+    get C56() {
+      return C[56] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 9,
+        [_Location_line]: 370,
+        [_Location_file]: null
+      });
+    },
+    get C50() {
+      return C[50] = dart.constList([C[51] || CT.C51, C[52] || CT.C52, C[53] || CT.C53, C[54] || CT.C54, C[55] || CT.C55, C[56] || CT.C56], T._LocationL());
+    },
+    get C49() {
+      return C[49] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[50] || CT.C50,
+        [_Location_name]: null,
+        [_Location_column]: 14,
+        [_Location_line]: 364,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    },
+    get C59() {
+      return C[59] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 364,
+        [_Location_file]: null
+      });
+    },
+    get C58() {
+      return C[58] = dart.constList([C[59] || CT.C59], T._LocationL());
+    },
+    get C57() {
+      return C[57] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[58] || CT.C58,
+        [_Location_name]: null,
+        [_Location_column]: 12,
+        [_Location_line]: 363,
+        [_Location_file]: "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart"
+      });
+    }
+  }, false);
+  var C = Array(60).fill(void 0);
+  var I = [
+    "file:///C:/src/flutter/packages/flutter/lib/src/widgets/animated_cross_fade.dart",
+    "package:flutter/src/widgets/animated_cross_fade.dart"
+  ];
+  var _name$ = dart.privateName(animated_cross_fade, "_name");
+  animated_cross_fade.CrossFadeState = class CrossFadeState extends core.Object {
+    toString() {
+      return this[_name$];
+    }
+  };
+  (animated_cross_fade.CrossFadeState.new = function(index, _name) {
+    if (index == null) dart.nullFailed(I[0], 19, 6, "index");
+    if (_name == null) dart.nullFailed(I[0], 19, 6, "_name");
+    this.index = index;
+    this[_name$] = _name;
+    ;
+  }).prototype = animated_cross_fade.CrossFadeState.prototype;
+  dart.addTypeTests(animated_cross_fade.CrossFadeState);
+  dart.addTypeCaches(animated_cross_fade.CrossFadeState);
+  dart.setLibraryUri(animated_cross_fade.CrossFadeState, I[1]);
+  dart.setFieldSignature(animated_cross_fade.CrossFadeState, () => ({
+    __proto__: dart.getFields(animated_cross_fade.CrossFadeState.__proto__),
+    index: dart.finalFieldType(core.int),
+    [_name$]: dart.finalFieldType(core.String)
+  }));
+  dart.defineExtensionMethods(animated_cross_fade.CrossFadeState, ['toString']);
+  animated_cross_fade.CrossFadeState.showFirst = C[0] || CT.C0;
+  animated_cross_fade.CrossFadeState.showSecond = C[1] || CT.C1;
+  animated_cross_fade.CrossFadeState.values = C[2] || CT.C2;
+  var firstChild$ = dart.privateName(animated_cross_fade, "AnimatedCrossFade.firstChild");
+  var secondChild$ = dart.privateName(animated_cross_fade, "AnimatedCrossFade.secondChild");
+  var crossFadeState$ = dart.privateName(animated_cross_fade, "AnimatedCrossFade.crossFadeState");
+  var duration$ = dart.privateName(animated_cross_fade, "AnimatedCrossFade.duration");
+  var reverseDuration$ = dart.privateName(animated_cross_fade, "AnimatedCrossFade.reverseDuration");
+  var firstCurve$ = dart.privateName(animated_cross_fade, "AnimatedCrossFade.firstCurve");
+  var secondCurve$ = dart.privateName(animated_cross_fade, "AnimatedCrossFade.secondCurve");
+  var sizeCurve$ = dart.privateName(animated_cross_fade, "AnimatedCrossFade.sizeCurve");
+  var alignment$ = dart.privateName(animated_cross_fade, "AnimatedCrossFade.alignment");
+  var layoutBuilder$ = dart.privateName(animated_cross_fade, "AnimatedCrossFade.layoutBuilder");
+  var Alignment_y = dart.privateName(alignment, "Alignment.y");
+  var Alignment_x = dart.privateName(alignment, "Alignment.x");
+  var _Location_parameterLocations = dart.privateName(widget_inspector, "_Location.parameterLocations");
+  var _Location_name = dart.privateName(widget_inspector, "_Location.name");
+  var _Location_column = dart.privateName(widget_inspector, "_Location.column");
+  var _Location_line = dart.privateName(widget_inspector, "_Location.line");
+  var _Location_file = dart.privateName(widget_inspector, "_Location.file");
+  animated_cross_fade.AnimatedCrossFade = class AnimatedCrossFade extends framework.StatefulWidget {
+    get firstChild() {
+      return this[firstChild$];
+    }
+    set firstChild(value) {
+      super.firstChild = value;
+    }
+    get secondChild() {
+      return this[secondChild$];
+    }
+    set secondChild(value) {
+      super.secondChild = value;
+    }
+    get crossFadeState() {
+      return this[crossFadeState$];
+    }
+    set crossFadeState(value) {
+      super.crossFadeState = value;
+    }
+    get duration() {
+      return this[duration$];
+    }
+    set duration(value) {
+      super.duration = value;
+    }
+    get reverseDuration() {
+      return this[reverseDuration$];
+    }
+    set reverseDuration(value) {
+      super.reverseDuration = value;
+    }
+    get firstCurve() {
+      return this[firstCurve$];
+    }
+    set firstCurve(value) {
+      super.firstCurve = value;
+    }
+    get secondCurve() {
+      return this[secondCurve$];
+    }
+    set secondCurve(value) {
+      super.secondCurve = value;
+    }
+    get sizeCurve() {
+      return this[sizeCurve$];
+    }
+    set sizeCurve(value) {
+      super.sizeCurve = value;
+    }
+    get alignment() {
+      return this[alignment$];
+    }
+    set alignment(value) {
+      super.alignment = value;
+    }
+    get layoutBuilder() {
+      return this[layoutBuilder$];
+    }
+    set layoutBuilder(value) {
+      super.layoutBuilder = value;
+    }
+    static defaultLayoutBuilder(topChild, topChildKey, bottomChild, bottomChildKey) {
+      if (topChild == null) dart.nullFailed(I[0], 217, 45, "topChild");
+      if (topChildKey == null) dart.nullFailed(I[0], 217, 59, "topChildKey");
+      if (bottomChild == null) dart.nullFailed(I[0], 217, 79, "bottomChild");
+      if (bottomChildKey == null) dart.nullFailed(I[0], 217, 96, "bottomChildKey");
+      return new basic.Stack.new({clipBehavior: ui.Clip.none, children: T.JSArrayOfWidget().of([new basic.Positioned.new({key: bottomChildKey, left: 0.0, top: 0.0, right: 0.0, child: bottomChild, $creationLocationd_0dea112b090073317d4: C[6] || CT.C6}), new basic.Positioned.new({key: topChildKey, child: topChild, $creationLocationd_0dea112b090073317d4: C[13] || CT.C13})]), $creationLocationd_0dea112b090073317d4: C[17] || CT.C17});
+    }
+    createState() {
+      return new animated_cross_fade._AnimatedCrossFadeState.new();
+    }
+    debugFillProperties(properties) {
+      let t0;
+      if (properties == null) dart.nullFailed(I[0], 240, 56, "properties");
+      super.debugFillProperties(properties);
+      properties.add(new (T.EnumPropertyOfCrossFadeState()).new("crossFadeState", this.crossFadeState));
+      properties.add(new (T.DiagnosticsPropertyOfAlignmentGeometry()).new("alignment", this.alignment, {defaultValue: alignment.Alignment.topCenter}));
+      properties.add(new diagnostics.IntProperty.new("duration", this.duration.inMilliseconds, {unit: "ms"}));
+      properties.add(new diagnostics.IntProperty.new("reverseDuration", (t0 = this.reverseDuration, t0 == null ? null : t0.inMilliseconds), {unit: "ms", defaultValue: null}));
+    }
+  };
+  (animated_cross_fade.AnimatedCrossFade.new = function(opts) {
+    let key = opts && 'key' in opts ? opts.key : null;
+    let firstChild = opts && 'firstChild' in opts ? opts.firstChild : null;
+    if (firstChild == null) dart.nullFailed(I[0], 122, 19, "firstChild");
+    let secondChild = opts && 'secondChild' in opts ? opts.secondChild : null;
+    if (secondChild == null) dart.nullFailed(I[0], 123, 19, "secondChild");
+    let firstCurve = opts && 'firstCurve' in opts ? opts.firstCurve : C[3] || CT.C3;
+    if (firstCurve == null) dart.nullFailed(I[0], 124, 10, "firstCurve");
+    let secondCurve = opts && 'secondCurve' in opts ? opts.secondCurve : C[3] || CT.C3;
+    if (secondCurve == null) dart.nullFailed(I[0], 125, 10, "secondCurve");
+    let sizeCurve = opts && 'sizeCurve' in opts ? opts.sizeCurve : C[3] || CT.C3;
+    if (sizeCurve == null) dart.nullFailed(I[0], 126, 10, "sizeCurve");
+    let alignment = opts && 'alignment' in opts ? opts.alignment : C[4] || CT.C4;
+    if (alignment == null) dart.nullFailed(I[0], 127, 10, "alignment");
+    let crossFadeState = opts && 'crossFadeState' in opts ? opts.crossFadeState : null;
+    if (crossFadeState == null) dart.nullFailed(I[0], 128, 19, "crossFadeState");
+    let duration = opts && 'duration' in opts ? opts.duration : null;
+    if (duration == null) dart.nullFailed(I[0], 129, 19, "duration");
+    let reverseDuration = opts && 'reverseDuration' in opts ? opts.reverseDuration : null;
+    let layoutBuilder = opts && 'layoutBuilder' in opts ? opts.layoutBuilder : C[5] || CT.C5;
+    if (layoutBuilder == null) dart.nullFailed(I[0], 131, 10, "layoutBuilder");
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    this[firstChild$] = firstChild;
+    this[secondChild$] = secondChild;
+    this[firstCurve$] = firstCurve;
+    this[secondCurve$] = secondCurve;
+    this[sizeCurve$] = sizeCurve;
+    this[alignment$] = alignment;
+    this[crossFadeState$] = crossFadeState;
+    this[duration$] = duration;
+    this[reverseDuration$] = reverseDuration;
+    this[layoutBuilder$] = layoutBuilder;
+    if (!(firstChild != null)) dart.assertFailed(null, I[0], 132, 15, "firstChild != null");
+    if (!(secondChild != null)) dart.assertFailed(null, I[0], 133, 15, "secondChild != null");
+    if (!(firstCurve != null)) dart.assertFailed(null, I[0], 134, 15, "firstCurve != null");
+    if (!(secondCurve != null)) dart.assertFailed(null, I[0], 135, 15, "secondCurve != null");
+    if (!(sizeCurve != null)) dart.assertFailed(null, I[0], 136, 15, "sizeCurve != null");
+    if (!(alignment != null)) dart.assertFailed(null, I[0], 137, 15, "alignment != null");
+    if (!(crossFadeState != null)) dart.assertFailed(null, I[0], 138, 15, "crossFadeState != null");
+    if (!(duration != null)) dart.assertFailed(null, I[0], 139, 15, "duration != null");
+    if (!(layoutBuilder != null)) dart.assertFailed(null, I[0], 140, 15, "layoutBuilder != null");
+    animated_cross_fade.AnimatedCrossFade.__proto__.new.call(this, {key: key, $creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = animated_cross_fade.AnimatedCrossFade.prototype;
+  dart.addTypeTests(animated_cross_fade.AnimatedCrossFade);
+  dart.addTypeCaches(animated_cross_fade.AnimatedCrossFade);
+  dart.setMethodSignature(animated_cross_fade.AnimatedCrossFade, () => ({
+    __proto__: dart.getMethods(animated_cross_fade.AnimatedCrossFade.__proto__),
+    createState: dart.fnType(animated_cross_fade._AnimatedCrossFadeState, [])
+  }));
+  dart.setLibraryUri(animated_cross_fade.AnimatedCrossFade, I[1]);
+  dart.setFieldSignature(animated_cross_fade.AnimatedCrossFade, () => ({
+    __proto__: dart.getFields(animated_cross_fade.AnimatedCrossFade.__proto__),
+    firstChild: dart.finalFieldType(framework.Widget),
+    secondChild: dart.finalFieldType(framework.Widget),
+    crossFadeState: dart.finalFieldType(animated_cross_fade.CrossFadeState),
+    duration: dart.finalFieldType(core.Duration),
+    reverseDuration: dart.finalFieldType(dart.nullable(core.Duration)),
+    firstCurve: dart.finalFieldType(curves.Curve),
+    secondCurve: dart.finalFieldType(curves.Curve),
+    sizeCurve: dart.finalFieldType(curves.Curve),
+    alignment: dart.finalFieldType(alignment.AlignmentGeometry),
+    layoutBuilder: dart.finalFieldType(dart.fnType(framework.Widget, [framework.Widget, key.Key, framework.Widget, key.Key]))
+  }));
+  var _controller = dart.privateName(animated_cross_fade, "_controller");
+  var ___AnimatedCrossFadeState__firstAnimation = dart.privateName(animated_cross_fade, "_#_AnimatedCrossFadeState#_firstAnimation");
+  var ___AnimatedCrossFadeState__firstAnimation_isSet = dart.privateName(animated_cross_fade, "_#_AnimatedCrossFadeState#_firstAnimation#isSet");
+  var ___AnimatedCrossFadeState__secondAnimation = dart.privateName(animated_cross_fade, "_#_AnimatedCrossFadeState#_secondAnimation");
+  var ___AnimatedCrossFadeState__secondAnimation_isSet = dart.privateName(animated_cross_fade, "_#_AnimatedCrossFadeState#_secondAnimation#isSet");
+  var _firstAnimation = dart.privateName(animated_cross_fade, "_firstAnimation");
+  var _secondAnimation = dart.privateName(animated_cross_fade, "_secondAnimation");
+  var _initAnimation = dart.privateName(animated_cross_fade, "_initAnimation");
+  var _isTransitioning = dart.privateName(animated_cross_fade, "_isTransitioning");
+  var ValueKey_value = dart.privateName(key, "ValueKey.value");
+  const State_TickerProviderStateMixin$36 = class State_TickerProviderStateMixin extends framework.State$(animated_cross_fade.AnimatedCrossFade) {};
+  (State_TickerProviderStateMixin$36.new = function() {
+    ticker_provider.TickerProviderStateMixin$(animated_cross_fade.AnimatedCrossFade)[dart.mixinNew].call(this);
+    State_TickerProviderStateMixin$36.__proto__.new.call(this);
+  }).prototype = State_TickerProviderStateMixin$36.prototype;
+  dart.applyMixin(State_TickerProviderStateMixin$36, ticker_provider.TickerProviderStateMixin$(animated_cross_fade.AnimatedCrossFade));
+  animated_cross_fade._AnimatedCrossFadeState = class _AnimatedCrossFadeState extends State_TickerProviderStateMixin$36 {
+    get [_firstAnimation]() {
+      let t0;
+      return dart.test(this[___AnimatedCrossFadeState__firstAnimation_isSet]) ? (t0 = this[___AnimatedCrossFadeState__firstAnimation], t0) : dart.throw(new _internal.LateError.fieldNI("_firstAnimation"));
+    }
+    set [_firstAnimation](t0) {
+      if (t0 == null) dart.nullFailed(I[0], 251, 26, "null");
+      this[___AnimatedCrossFadeState__firstAnimation_isSet] = true;
+      this[___AnimatedCrossFadeState__firstAnimation] = t0;
+    }
+    get [_secondAnimation]() {
+      let t1;
+      return dart.test(this[___AnimatedCrossFadeState__secondAnimation_isSet]) ? (t1 = this[___AnimatedCrossFadeState__secondAnimation], t1) : dart.throw(new _internal.LateError.fieldNI("_secondAnimation"));
+    }
+    set [_secondAnimation](t1) {
+      if (t1 == null) dart.nullFailed(I[0], 252, 26, "null");
+      this[___AnimatedCrossFadeState__secondAnimation_isSet] = true;
+      this[___AnimatedCrossFadeState__secondAnimation] = t1;
+    }
+    initState() {
+      super.initState();
+      this[_controller] = new animation_controller.AnimationController.new({duration: this.widget.duration, reverseDuration: this.widget.reverseDuration, vsync: this});
+      if (this.widget.crossFadeState == animated_cross_fade.CrossFadeState.showSecond) dart.nullCheck(this[_controller]).value = 1.0;
+      this[_firstAnimation] = this[_initAnimation](this.widget.firstCurve, true);
+      this[_secondAnimation] = this[_initAnimation](this.widget.secondCurve, false);
+      dart.nullCheck(this[_controller]).addStatusListener(dart.fn(status => {
+        if (status == null) dart.nullFailed(I[0], 266, 53, "status");
+        this.setState(dart.fn(() => {
+        }, T.VoidTovoid()));
+      }, T.AnimationStatusTovoid()));
+    }
+    [_initAnimation](curve, inverted) {
+      if (curve == null) dart.nullFailed(I[0], 274, 42, "curve");
+      if (inverted == null) dart.nullFailed(I[0], 274, 54, "inverted");
+      let result = dart.nullCheck(this[_controller]).drive(core.double, new tween.CurveTween.new({curve: curve}));
+      if (dart.test(inverted)) result = result.drive(core.double, new (T.TweenOfdouble()).new({begin: 1.0, end: 0.0}));
+      return result;
+    }
+    dispose() {
+      dart.nullCheck(this[_controller]).dispose();
+      super.dispose();
+    }
+    didUpdateWidget(oldWidget) {
+      animated_cross_fade.AnimatedCrossFade.as(oldWidget);
+      if (oldWidget == null) dart.nullFailed(I[0], 288, 42, "oldWidget");
+      super.didUpdateWidget(oldWidget);
+      if (!dart.equals(this.widget.duration, oldWidget.duration)) dart.nullCheck(this[_controller]).duration = this.widget.duration;
+      if (!dart.equals(this.widget.reverseDuration, oldWidget.reverseDuration)) dart.nullCheck(this[_controller]).reverseDuration = this.widget.reverseDuration;
+      if (!dart.equals(this.widget.firstCurve, oldWidget.firstCurve)) this[_firstAnimation] = this[_initAnimation](this.widget.firstCurve, true);
+      if (!dart.equals(this.widget.secondCurve, oldWidget.secondCurve)) this[_secondAnimation] = this[_initAnimation](this.widget.secondCurve, false);
+      if (this.widget.crossFadeState != oldWidget.crossFadeState) {
+        switch (this.widget.crossFadeState) {
+          case C[0] || CT.C0:
+          {
+            dart.nullCheck(this[_controller]).reverse();
+            break;
+          }
+          case C[1] || CT.C1:
+          {
+            dart.nullCheck(this[_controller]).forward();
+            break;
+          }
+          default:
+          {
+            dart.throw(new _internal.ReachabilityError.new("`null` encountered as case in a switch expression with a non-nullable enum type."));
+          }
+        }
+      }
+    }
+    get [_isTransitioning]() {
+      return dart.nullCheck(this[_controller]).status == animation.AnimationStatus.forward || dart.nullCheck(this[_controller]).status == animation.AnimationStatus.reverse;
+    }
+    build(context) {
+      let t6, t5, t4, t3, t2;
+      if (context == null) dart.nullFailed(I[0], 314, 29, "context");
+      let kFirstChildKey = C[21] || CT.C21;
+      let kSecondChildKey = C[22] || CT.C22;
+      let transitioningForwards = dart.nullCheck(this[_controller]).status == animation.AnimationStatus.completed || dart.nullCheck(this[_controller]).status == animation.AnimationStatus.forward;
+      let topKey = null;
+      let topChild = null;
+      let topAnimation = null;
+      let bottomKey = null;
+      let bottomChild = null;
+      let bottomAnimation = null;
+      if (transitioningForwards) {
+        topKey = kSecondChildKey;
+        topChild = this.widget.secondChild;
+        topAnimation = this[_secondAnimation];
+        bottomKey = kFirstChildKey;
+        bottomChild = this.widget.firstChild;
+        bottomAnimation = this[_firstAnimation];
+      } else {
+        topKey = kFirstChildKey;
+        topChild = this.widget.firstChild;
+        topAnimation = this[_firstAnimation];
+        bottomKey = kSecondChildKey;
+        bottomChild = this.widget.secondChild;
+        bottomAnimation = this[_secondAnimation];
+      }
+      bottomChild = new ticker_provider.TickerMode.new({key: bottomKey, enabled: this[_isTransitioning], child: new basic.ExcludeSemantics.new({excluding: true, child: new transitions.FadeTransition.new({opacity: bottomAnimation, child: bottomChild, $creationLocationd_0dea112b090073317d4: C[23] || CT.C23}), $creationLocationd_0dea112b090073317d4: C[27] || CT.C27}), $creationLocationd_0dea112b090073317d4: C[31] || CT.C31});
+      topChild = new ticker_provider.TickerMode.new({key: topKey, enabled: true, child: new basic.ExcludeSemantics.new({excluding: false, child: new transitions.FadeTransition.new({opacity: topAnimation, child: topChild, $creationLocationd_0dea112b090073317d4: C[36] || CT.C36}), $creationLocationd_0dea112b090073317d4: C[40] || CT.C40}), $creationLocationd_0dea112b090073317d4: C[44] || CT.C44});
+      return new basic.ClipRect.new({child: new animated_size.AnimatedSize.new({alignment: this.widget.alignment, duration: this.widget.duration, reverseDuration: this.widget.reverseDuration, curve: this.widget.sizeCurve, vsync: this, child: (t2 = this.widget, t3 = topChild, t4 = topKey, t5 = bottomChild, t6 = bottomKey, t2.layoutBuilder(t3, t4, t5, t6)), $creationLocationd_0dea112b090073317d4: C[49] || CT.C49}), $creationLocationd_0dea112b090073317d4: C[57] || CT.C57});
+    }
+    debugFillProperties(description) {
+      if (description == null) dart.nullFailed(I[0], 376, 56, "description");
+      super.debugFillProperties(description);
+      description.add(new (T.EnumPropertyOfCrossFadeState()).new("crossFadeState", this.widget.crossFadeState));
+      description.add(new (T.DiagnosticsPropertyOfAnimationController()).new("controller", this[_controller], {showName: false}));
+      description.add(new (T.DiagnosticsPropertyOfAlignmentGeometry()).new("alignment", this.widget.alignment, {defaultValue: alignment.Alignment.topCenter}));
+    }
+  };
+  (animated_cross_fade._AnimatedCrossFadeState.new = function() {
+    this[_controller] = null;
+    this[___AnimatedCrossFadeState__firstAnimation] = null;
+    this[___AnimatedCrossFadeState__firstAnimation_isSet] = false;
+    this[___AnimatedCrossFadeState__secondAnimation] = null;
+    this[___AnimatedCrossFadeState__secondAnimation_isSet] = false;
+    animated_cross_fade._AnimatedCrossFadeState.__proto__.new.call(this);
+    ;
+  }).prototype = animated_cross_fade._AnimatedCrossFadeState.prototype;
+  dart.addTypeTests(animated_cross_fade._AnimatedCrossFadeState);
+  dart.addTypeCaches(animated_cross_fade._AnimatedCrossFadeState);
+  dart.setMethodSignature(animated_cross_fade._AnimatedCrossFadeState, () => ({
+    __proto__: dart.getMethods(animated_cross_fade._AnimatedCrossFadeState.__proto__),
+    [_initAnimation]: dart.fnType(animation.Animation$(core.double), [curves.Curve, core.bool]),
+    build: dart.fnType(framework.Widget, [framework.BuildContext])
+  }));
+  dart.setGetterSignature(animated_cross_fade._AnimatedCrossFadeState, () => ({
+    __proto__: dart.getGetters(animated_cross_fade._AnimatedCrossFadeState.__proto__),
+    [_firstAnimation]: animation.Animation$(core.double),
+    [_secondAnimation]: animation.Animation$(core.double),
+    [_isTransitioning]: core.bool
+  }));
+  dart.setSetterSignature(animated_cross_fade._AnimatedCrossFadeState, () => ({
+    __proto__: dart.getSetters(animated_cross_fade._AnimatedCrossFadeState.__proto__),
+    [_firstAnimation]: animation.Animation$(core.double),
+    [_secondAnimation]: animation.Animation$(core.double)
+  }));
+  dart.setLibraryUri(animated_cross_fade._AnimatedCrossFadeState, I[1]);
+  dart.setFieldSignature(animated_cross_fade._AnimatedCrossFadeState, () => ({
+    __proto__: dart.getFields(animated_cross_fade._AnimatedCrossFadeState.__proto__),
+    [_controller]: dart.fieldType(dart.nullable(animation_controller.AnimationController)),
+    [___AnimatedCrossFadeState__firstAnimation]: dart.fieldType(dart.nullable(animation.Animation$(core.double))),
+    [___AnimatedCrossFadeState__firstAnimation_isSet]: dart.fieldType(core.bool),
+    [___AnimatedCrossFadeState__secondAnimation]: dart.fieldType(dart.nullable(animation.Animation$(core.double))),
+    [___AnimatedCrossFadeState__secondAnimation_isSet]: dart.fieldType(core.bool)
+  }));
+  dart.trackLibraries("packages/flutter/src/widgets/animated_cross_fade.dart", {
+    "package:flutter/src/widgets/animated_cross_fade.dart": animated_cross_fade
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["animated_cross_fade.dart"],"names":[],"mappings":"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","file":"../../../../../../../packages/flutter/src/widgets/animated_cross_fade.dart.lib.js"}');
+  // Exports:
+  return {
+    src__widgets__animated_cross_fade: animated_cross_fade
+  };
+}));
+
+//# sourceMappingURL=animated_cross_fade.dart.lib.js.map

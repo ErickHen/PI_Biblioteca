@@ -1,0 +1,339 @@
+define(['dart_sdk', 'packages/flutter/src/painting/basic_types.dart', 'packages/flutter/src/widgets/widget_span.dart', 'packages/flutter/src/rendering/sliver.dart', 'packages/flutter/src/foundation/debug.dart'], (function load__packages__scrollable_positioned_list__src__viewport_dart(dart_sdk, packages__flutter__src__painting__basic_types$46dart, packages__flutter__src__widgets__widget_span$46dart, packages__flutter__src__rendering__sliver$46dart, packages__flutter__src__foundation__debug$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const ui = dart_sdk.ui;
+  const math = dart_sdk.math;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const basic_types = packages__flutter__src__painting__basic_types$46dart.src__painting__basic_types;
+  const framework = packages__flutter__src__widgets__widget_span$46dart.src__widgets__framework;
+  const viewport = packages__flutter__src__widgets__widget_span$46dart.src__widgets__viewport;
+  const viewport$ = packages__flutter__src__rendering__sliver$46dart.src__rendering__viewport;
+  const sliver = packages__flutter__src__rendering__sliver$46dart.src__rendering__sliver;
+  const assertions = packages__flutter__src__foundation__debug$46dart.src__foundation__assertions;
+  var viewport$0 = Object.create(dart.library);
+  var $isNaN = dartx.isNaN;
+  var $isFinite = dartx.isFinite;
+  var $clamp = dartx.clamp;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    WidgetL: () => (T.WidgetL = dart.constFn(dart.legacy(framework.Widget)))(),
+    RenderSliverL: () => (T.RenderSliverL = dart.constFn(dart.legacy(sliver.RenderSliver)))(),
+    doubleL: () => (T.doubleL = dart.constFn(dart.legacy(core.double)))(),
+    boolL: () => (T.boolL = dart.constFn(dart.legacy(core.bool)))(),
+    VoidToboolL: () => (T.VoidToboolL = dart.constFn(dart.fnType(T.boolL(), [])))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: basic_types.AxisDirection.prototype,
+        [_name]: "AxisDirection.down",
+        index: 2
+      });
+    },
+    get C1() {
+      return C[1] = dart.constList([], T.WidgetL());
+    },
+    get C2() {
+      return C[2] = dart.const({
+        __proto__: basic_types.Axis.prototype,
+        [_name]: "Axis.vertical",
+        index: 1
+      });
+    },
+    get C3() {
+      return C[3] = dart.const({
+        __proto__: basic_types.Axis.prototype,
+        [_name]: "Axis.horizontal",
+        index: 0
+      });
+    },
+    get C4() {
+      return C[4] = dart.const({
+        __proto__: viewport$.CacheExtentStyle.prototype,
+        [_name$]: "CacheExtentStyle.pixel",
+        index: 0
+      });
+    },
+    get C5() {
+      return C[5] = dart.const({
+        __proto__: viewport$.CacheExtentStyle.prototype,
+        [_name$]: "CacheExtentStyle.viewport",
+        index: 1
+      });
+    },
+    get C6() {
+      return C[6] = dart.const({
+        __proto__: sliver.GrowthDirection.prototype,
+        [_name$0]: "GrowthDirection.forward",
+        index: 0
+      });
+    },
+    get C7() {
+      return C[7] = dart.const({
+        __proto__: sliver.GrowthDirection.prototype,
+        [_name$0]: "GrowthDirection.reverse",
+        index: 1
+      });
+    }
+  }, false);
+  var C = Array(8).fill(void 0);
+  var I = [
+    "package:scrollable_positioned_list/src/viewport.dart",
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/viewport.dart"
+  ];
+  var _name = dart.privateName(basic_types, "_name");
+  var _anchor = dart.privateName(viewport$0, "_anchor");
+  viewport$0.UnboundedViewport = class UnboundedViewport extends viewport.Viewport {
+    get anchor() {
+      return this[_anchor];
+    }
+    createRenderObject(context) {
+      let t0;
+      return new viewport$0.UnboundedRenderViewport.new({axisDirection: this.axisDirection, crossAxisDirection: (t0 = this.crossAxisDirection, t0 == null ? viewport.Viewport.getDefaultCrossAxisDirection(context, this.axisDirection) : t0), anchor: this.anchor, offset: this.offset, cacheExtent: this.cacheExtent});
+    }
+  };
+  (viewport$0.UnboundedViewport.new = function(opts) {
+    let key = opts && 'key' in opts ? opts.key : null;
+    let axisDirection = opts && 'axisDirection' in opts ? opts.axisDirection : C[0] || CT.C0;
+    let crossAxisDirection = opts && 'crossAxisDirection' in opts ? opts.crossAxisDirection : null;
+    let anchor = opts && 'anchor' in opts ? opts.anchor : 0;
+    let offset = opts && 'offset' in opts ? opts.offset : null;
+    let center = opts && 'center' in opts ? opts.center : null;
+    let cacheExtent = opts && 'cacheExtent' in opts ? opts.cacheExtent : null;
+    let slivers = opts && 'slivers' in opts ? opts.slivers : C[1] || CT.C1;
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    this[_anchor] = anchor;
+    viewport$0.UnboundedViewport.__proto__.new.call(this, {key: key, axisDirection: axisDirection, crossAxisDirection: crossAxisDirection, offset: offset, center: center, cacheExtent: cacheExtent, slivers: slivers, $creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = viewport$0.UnboundedViewport.prototype;
+  dart.addTypeTests(viewport$0.UnboundedViewport);
+  dart.addTypeCaches(viewport$0.UnboundedViewport);
+  dart.setMethodSignature(viewport$0.UnboundedViewport, () => ({
+    __proto__: dart.getMethods(viewport$0.UnboundedViewport.__proto__),
+    createRenderObject: dart.fnType(dart.legacy(viewport$.RenderViewport), [dart.legacy(framework.BuildContext)])
+  }));
+  dart.setGetterSignature(viewport$0.UnboundedViewport, () => ({
+    __proto__: dart.getGetters(viewport$0.UnboundedViewport.__proto__),
+    anchor: dart.legacy(core.double)
+  }));
+  dart.setLibraryUri(viewport$0.UnboundedViewport, I[0]);
+  dart.setFieldSignature(viewport$0.UnboundedViewport, () => ({
+    __proto__: dart.getFields(viewport$0.UnboundedViewport.__proto__),
+    [_anchor]: dart.finalFieldType(dart.legacy(core.double))
+  }));
+  var _minScrollExtent = dart.privateName(viewport$0, "_minScrollExtent");
+  var _maxScrollExtent = dart.privateName(viewport$0, "_maxScrollExtent");
+  var _hasVisualOverflow = dart.privateName(viewport$0, "_hasVisualOverflow");
+  var _calculatedCacheExtent = dart.privateName(viewport$0, "_calculatedCacheExtent");
+  var _attemptLayout = dart.privateName(viewport$0, "_attemptLayout");
+  var _name$ = dart.privateName(viewport$, "_name");
+  var _name$0 = dart.privateName(sliver, "_name");
+  viewport$0.UnboundedRenderViewport = class UnboundedRenderViewport extends viewport$.RenderViewport {
+    get anchor() {
+      return this[_anchor];
+    }
+    set anchor(value) {
+      if (!(value != null)) dart.assertFailed(null, I[1], 104, 12, "value != null");
+      if (value == this[_anchor]) return;
+      this[_anchor] = value;
+      this.markNeedsLayout();
+    }
+    performResize() {
+      super.performResize();
+      switch (this.axis) {
+        case C[2] || CT.C2:
+        {
+          this.offset.applyViewportDimension(this.size.height);
+          break;
+        }
+        case C[3] || CT.C3:
+        {
+          this.offset.applyViewportDimension(this.size.width);
+          break;
+        }
+      }
+    }
+    describeSemanticsClip(child) {
+      T.RenderSliverL().as(child);
+      if (!(this.axis != null)) dart.assertFailed(null, I[1], 128, 12, "axis != null");
+      if (this[_calculatedCacheExtent] == null) {
+        return this.semanticBounds;
+      }
+      switch (this.axis) {
+        case C[2] || CT.C2:
+        {
+          return new ui.Rect.fromLTRB(this.semanticBounds.left, dart.notNull(this.semanticBounds.top) - dart.notNull(this[_calculatedCacheExtent]), this.semanticBounds.right, dart.notNull(this.semanticBounds.bottom) + dart.notNull(this[_calculatedCacheExtent]));
+        }
+        default:
+        {
+          return new ui.Rect.fromLTRB(dart.notNull(this.semanticBounds.left) - dart.notNull(this[_calculatedCacheExtent]), this.semanticBounds.top, dart.notNull(this.semanticBounds.right) + dart.notNull(this[_calculatedCacheExtent]), this.semanticBounds.bottom);
+        }
+      }
+    }
+    performLayout() {
+      if (this.center == null) {
+        if (!(this.firstChild == null)) dart.assertFailed(null, I[1], 155, 14, "firstChild == null");
+        this[_minScrollExtent] = 0.0;
+        this[_maxScrollExtent] = 0.0;
+        this[_hasVisualOverflow] = false;
+        this.offset.applyContentDimensions(0.0, 0.0);
+        return;
+      }
+      if (!dart.equals(this.center.parent, this)) dart.assertFailed(null, I[1], 162, 12, "center.parent == this");
+      let mainAxisExtent = null;
+      let crossAxisExtent = null;
+      switch (this.axis) {
+        case C[2] || CT.C2:
+        {
+          mainAxisExtent = this.size.height;
+          crossAxisExtent = this.size.width;
+          break;
+        }
+        case C[3] || CT.C3:
+        {
+          mainAxisExtent = this.size.width;
+          crossAxisExtent = this.size.height;
+          break;
+        }
+      }
+      let centerOffsetAdjustment = this.center.centerOffsetAdjustment;
+      let correction = null;
+      let count = 0;
+      do {
+        if (!(this.offset.pixels != null)) dart.assertFailed(null, I[1], 182, 14, "offset.pixels != null");
+        correction = this[_attemptLayout](mainAxisExtent, crossAxisExtent, dart.notNull(this.offset.pixels) + dart.notNull(centerOffsetAdjustment));
+        if (correction !== 0.0) {
+          this.offset.correctBy(correction);
+        } else {
+          let top = dart.notNull(this[_minScrollExtent]) + dart.notNull(mainAxisExtent) * dart.notNull(this.anchor);
+          let bottom = dart.notNull(this[_maxScrollExtent]) - dart.notNull(mainAxisExtent) * (1.0 - dart.notNull(this.anchor));
+          let maxScrollOffset = math.max(T.doubleL(), math.min(T.doubleL(), 0.0, top), bottom);
+          let minScrollOffset = math.min(T.doubleL(), top, maxScrollOffset);
+          if (dart.test(this.offset.applyContentDimensions(minScrollOffset, maxScrollOffset))) break;
+        }
+        count = count + 1;
+      } while (count < 10);
+      if (!dart.test(dart.fn(() => {
+        if (count >= 10) {
+          if (!(count !== 1)) dart.assertFailed(null, I[1], 201, 16, "count != 1");
+          dart.throw(assertions.FlutterError.new("A RenderViewport exceeded its maximum number of layout cycles.\n" + "RenderViewport render objects, during layout, can retry if either their " + "slivers or their ViewportOffset decide that the offset should be corrected " + "to take into account information collected during that layout.\n" + "In the case of this RenderViewport object, however, this happened " + dart.str(count) + " " + "times and still there was no consensus on the scroll offset. This usually " + "indicates a bug. Specifically, it means that one of the following three " + "problems is being experienced by the RenderViewport object:\n" + " * One of the RenderSliver children or the ViewportOffset have a bug such" + " that they always think that they need to correct the offset regardless.\n" + " * Some combination of the RenderSliver children and the ViewportOffset" + " have a bad interaction such that one applies a correction then another" + " applies a reverse correction, leading to an infinite loop of corrections.\n" + " * There is a pathological case that would eventually resolve, but it is" + " so complicated that it cannot be resolved in any reasonable number of" + " layout passes."));
+        }
+        return true;
+      }, T.VoidToboolL())())) dart.assertFailed(null, I[1], 199, 12, "() {\n      if (count >= _maxLayoutCycles) {\n        assert(count != 1);\n        throw FlutterError(\n            'A RenderViewport exceeded its maximum number of layout cycles.\\n'\n            'RenderViewport render objects, during layout, can retry if either their '\n            'slivers or their ViewportOffset decide that the offset should be corrected '\n            'to take into account information collected during that layout.\\n'\n            'In the case of this RenderViewport object, however, this happened $count '\n            'times and still there was no consensus on the scroll offset. This usually '\n            'indicates a bug. Specifically, it means that one of the following three '\n            'problems is being experienced by the RenderViewport object:\\n'\n            ' * One of the RenderSliver children or the ViewportOffset have a bug such'\n            ' that they always think that they need to correct the offset regardless.\\n'\n            ' * Some combination of the RenderSliver children and the ViewportOffset'\n            ' have a bad interaction such that one applies a correction then another'\n            ' applies a reverse correction, leading to an infinite loop of corrections.\\n'\n            ' * There is a pathological case that would eventually resolve, but it is'\n            ' so complicated that it cannot be resolved in any reasonable number of'\n            ' layout passes.');\n      }\n      return true;\n    }()");
+    }
+    [_attemptLayout](mainAxisExtent, crossAxisExtent, correctedOffset) {
+      if (!!mainAxisExtent[$isNaN]) dart.assertFailed(null, I[1], 226, 12, "!mainAxisExtent.isNaN");
+      if (!(dart.notNull(mainAxisExtent) >= 0.0)) dart.assertFailed(null, I[1], 227, 12, "mainAxisExtent >= 0.0");
+      if (!crossAxisExtent[$isFinite]) dart.assertFailed(null, I[1], 228, 12, "crossAxisExtent.isFinite");
+      if (!(dart.notNull(crossAxisExtent) >= 0.0)) dart.assertFailed(null, I[1], 229, 12, "crossAxisExtent >= 0.0");
+      if (!correctedOffset[$isFinite]) dart.assertFailed(null, I[1], 230, 12, "correctedOffset.isFinite");
+      this[_minScrollExtent] = 0.0;
+      this[_maxScrollExtent] = 0.0;
+      this[_hasVisualOverflow] = false;
+      let centerOffset = dart.notNull(mainAxisExtent) * dart.notNull(this.anchor) - dart.notNull(correctedOffset);
+      let reverseDirectionRemainingPaintExtent = centerOffset[$clamp](0.0, mainAxisExtent);
+      let forwardDirectionRemainingPaintExtent = (dart.notNull(mainAxisExtent) - centerOffset)[$clamp](0.0, mainAxisExtent);
+      switch (this.cacheExtentStyle) {
+        case C[4] || CT.C4:
+        {
+          this[_calculatedCacheExtent] = this.cacheExtent;
+          break;
+        }
+        case C[5] || CT.C5:
+        {
+          this[_calculatedCacheExtent] = dart.notNull(mainAxisExtent) * dart.notNull(this.cacheExtent);
+          break;
+        }
+      }
+      let fullCacheExtent = dart.notNull(mainAxisExtent) + 2 * dart.notNull(this[_calculatedCacheExtent]);
+      let centerCacheOffset = centerOffset + dart.notNull(this[_calculatedCacheExtent]);
+      let reverseDirectionRemainingCacheExtent = centerCacheOffset[$clamp](0.0, fullCacheExtent);
+      let forwardDirectionRemainingCacheExtent = (fullCacheExtent - centerCacheOffset)[$clamp](0.0, fullCacheExtent);
+      let leadingNegativeChild = this.childBefore(this.center);
+      if (leadingNegativeChild != null) {
+        let result = this.layoutChildSequence({child: leadingNegativeChild, scrollOffset: math.max(T.doubleL(), mainAxisExtent, centerOffset) - dart.notNull(mainAxisExtent), overlap: 0.0, layoutOffset: forwardDirectionRemainingPaintExtent, remainingPaintExtent: reverseDirectionRemainingPaintExtent, mainAxisExtent: mainAxisExtent, crossAxisExtent: crossAxisExtent, growthDirection: sliver.GrowthDirection.reverse, advance: dart.bind(this, 'childBefore'), remainingCacheExtent: reverseDirectionRemainingCacheExtent, cacheOrigin: (dart.notNull(mainAxisExtent) - centerOffset)[$clamp](-dart.notNull(this[_calculatedCacheExtent]), 0.0)});
+        if (result !== 0.0) return -dart.notNull(result);
+      }
+      return this.layoutChildSequence({child: this.center, scrollOffset: math.max(T.doubleL(), 0.0, -centerOffset), overlap: leadingNegativeChild == null ? math.min(T.doubleL(), 0.0, -centerOffset) : 0.0, layoutOffset: centerOffset >= dart.notNull(mainAxisExtent) ? centerOffset : reverseDirectionRemainingPaintExtent, remainingPaintExtent: forwardDirectionRemainingPaintExtent, mainAxisExtent: mainAxisExtent, crossAxisExtent: crossAxisExtent, growthDirection: sliver.GrowthDirection.forward, advance: dart.bind(this, 'childAfter'), remainingCacheExtent: forwardDirectionRemainingCacheExtent, cacheOrigin: centerOffset[$clamp](-dart.notNull(this[_calculatedCacheExtent]), 0.0)});
+    }
+    get hasVisualOverflow() {
+      return this[_hasVisualOverflow];
+    }
+    updateOutOfBandData(growthDirection, childLayoutGeometry) {
+      switch (growthDirection) {
+        case C[6] || CT.C6:
+        {
+          this[_maxScrollExtent] = dart.notNull(this[_maxScrollExtent]) + dart.notNull(childLayoutGeometry.scrollExtent);
+          break;
+        }
+        case C[7] || CT.C7:
+        {
+          this[_minScrollExtent] = dart.notNull(this[_minScrollExtent]) - dart.notNull(childLayoutGeometry.scrollExtent);
+          break;
+        }
+      }
+      if (dart.test(childLayoutGeometry.hasVisualOverflow)) this[_hasVisualOverflow] = true;
+    }
+  };
+  (viewport$0.UnboundedRenderViewport.new = function(opts) {
+    let axisDirection = opts && 'axisDirection' in opts ? opts.axisDirection : C[0] || CT.C0;
+    let crossAxisDirection = opts && 'crossAxisDirection' in opts ? opts.crossAxisDirection : null;
+    let offset = opts && 'offset' in opts ? opts.offset : null;
+    let anchor = opts && 'anchor' in opts ? opts.anchor : 0;
+    let children = opts && 'children' in opts ? opts.children : null;
+    let center = opts && 'center' in opts ? opts.center : null;
+    let cacheExtent = opts && 'cacheExtent' in opts ? opts.cacheExtent : null;
+    this[_minScrollExtent] = null;
+    this[_maxScrollExtent] = null;
+    this[_hasVisualOverflow] = false;
+    this[_calculatedCacheExtent] = null;
+    this[_anchor] = anchor;
+    viewport$0.UnboundedRenderViewport.__proto__.new.call(this, {axisDirection: axisDirection, crossAxisDirection: crossAxisDirection, offset: offset, center: center, cacheExtent: cacheExtent, children: children});
+    ;
+  }).prototype = viewport$0.UnboundedRenderViewport.prototype;
+  dart.addTypeTests(viewport$0.UnboundedRenderViewport);
+  dart.addTypeCaches(viewport$0.UnboundedRenderViewport);
+  dart.setMethodSignature(viewport$0.UnboundedRenderViewport, () => ({
+    __proto__: dart.getMethods(viewport$0.UnboundedRenderViewport.__proto__),
+    describeSemanticsClip: dart.fnType(dart.legacy(ui.Rect), [dart.legacy(core.Object)]),
+    [_attemptLayout]: dart.fnType(dart.legacy(core.double), [dart.legacy(core.double), dart.legacy(core.double), dart.legacy(core.double)]),
+    updateOutOfBandData: dart.fnType(dart.void, [dart.legacy(sliver.GrowthDirection), dart.legacy(sliver.SliverGeometry)])
+  }));
+  dart.setGetterSignature(viewport$0.UnboundedRenderViewport, () => ({
+    __proto__: dart.getGetters(viewport$0.UnboundedRenderViewport.__proto__),
+    anchor: dart.legacy(core.double),
+    hasVisualOverflow: dart.legacy(core.bool)
+  }));
+  dart.setSetterSignature(viewport$0.UnboundedRenderViewport, () => ({
+    __proto__: dart.getSetters(viewport$0.UnboundedRenderViewport.__proto__),
+    anchor: dart.legacy(core.double)
+  }));
+  dart.setLibraryUri(viewport$0.UnboundedRenderViewport, I[0]);
+  dart.setFieldSignature(viewport$0.UnboundedRenderViewport, () => ({
+    __proto__: dart.getFields(viewport$0.UnboundedRenderViewport.__proto__),
+    [_anchor]: dart.fieldType(dart.legacy(core.double)),
+    [_minScrollExtent]: dart.fieldType(dart.legacy(core.double)),
+    [_maxScrollExtent]: dart.fieldType(dart.legacy(core.double)),
+    [_hasVisualOverflow]: dart.fieldType(dart.legacy(core.bool)),
+    [_calculatedCacheExtent]: dart.fieldType(dart.legacy(core.double))
+  }));
+  dart.defineLazy(viewport$0.UnboundedRenderViewport, {
+    /*viewport$0.UnboundedRenderViewport._maxLayoutCycles*/get _maxLayoutCycles() {
+      return 10;
+    }
+  }, true);
+  dart.trackLibraries("packages/scrollable_positioned_list/src/viewport.dart", {
+    "package:scrollable_positioned_list/src/viewport.dart": viewport$0
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["viewport.dart"],"names":[],"mappings":"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","file":"../../../../../../../../packages/scrollable_positioned_list/src/viewport.dart.lib.js"}');
+  // Exports:
+  return {
+    src__viewport: viewport$0
+  };
+}));
+
+//# sourceMappingURL=viewport.dart.lib.js.map

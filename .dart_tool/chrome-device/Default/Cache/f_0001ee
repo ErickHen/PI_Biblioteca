@@ -1,0 +1,2151 @@
+define(['dart_sdk', 'packages/flutter/src/painting/basic_types.dart', 'packages/flutter/src/widgets/widget_span.dart', 'packages/flutter/src/painting/edge_insets.dart', 'packages/flutter/src/foundation/change_notifier.dart', 'packages/scrollable_positioned_list/src/element_registry.dart', 'packages/scrollable_positioned_list/src/scroll_view.dart', 'packages/flutter/src/foundation/key.dart', 'packages/flutter/src/scheduler/binding.dart', 'packages/flutter/src/rendering/layer.dart', 'packages/flutter/src/rendering/sliver.dart', 'packages/flutter/src/animation/curves.dart', 'packages/flutter/src/animation/listener_helpers.dart', 'packages/flutter/src/widgets/layout_builder.dart', 'packages/flutter/src/gestures/drag_details.dart', 'packages/scrollable_positioned_list/src/post_mount_callback.dart', 'packages/flutter/src/animation/animation_controller.dart', 'packages/flutter/src/animation/tween_sequence.dart'], (function load__packages__scrollable_positioned_list__src__positioned_list_dart(dart_sdk, packages__flutter__src__painting__basic_types$46dart, packages__flutter__src__widgets__widget_span$46dart, packages__flutter__src__painting__edge_insets$46dart, packages__flutter__src__foundation__change_notifier$46dart, packages__scrollable_positioned_list__src__element_registry$46dart, packages__scrollable_positioned_list__src__scroll_view$46dart, packages__flutter__src__foundation__key$46dart, packages__flutter__src__scheduler__binding$46dart, packages__flutter__src__rendering__layer$46dart, packages__flutter__src__rendering__sliver$46dart, packages__flutter__src__animation__curves$46dart, packages__flutter__src__animation__listener_helpers$46dart, packages__flutter__src__widgets__layout_builder$46dart, packages__flutter__src__gestures__drag_details$46dart, packages__scrollable_positioned_list__src__post_mount_callback$46dart, packages__flutter__src__animation__animation_controller$46dart, packages__flutter__src__animation__tween_sequence$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _interceptors = dart_sdk._interceptors;
+  const ui = dart_sdk.ui;
+  const async = dart_sdk.async;
+  const math = dart_sdk.math;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const basic_types = packages__flutter__src__painting__basic_types$46dart.src__painting__basic_types;
+  const framework = packages__flutter__src__widgets__widget_span$46dart.src__widgets__framework;
+  const scroll_controller = packages__flutter__src__widgets__widget_span$46dart.src__widgets__scroll_controller;
+  const scroll_physics = packages__flutter__src__widgets__widget_span$46dart.src__widgets__scroll_physics;
+  const basic = packages__flutter__src__widgets__widget_span$46dart.src__widgets__basic;
+  const sliver = packages__flutter__src__widgets__widget_span$46dart.src__widgets__sliver;
+  const widget_inspector = packages__flutter__src__widgets__widget_span$46dart.src__widgets__widget_inspector;
+  const page_storage = packages__flutter__src__widgets__widget_span$46dart.src__widgets__page_storage;
+  const gesture_detector = packages__flutter__src__widgets__widget_span$46dart.src__widgets__gesture_detector;
+  const transitions = packages__flutter__src__widgets__widget_span$46dart.src__widgets__transitions;
+  const notification_listener = packages__flutter__src__widgets__widget_span$46dart.src__widgets__notification_listener;
+  const scroll_notification = packages__flutter__src__widgets__widget_span$46dart.src__widgets__scroll_notification;
+  const ticker_provider = packages__flutter__src__widgets__widget_span$46dart.src__widgets__ticker_provider;
+  const edge_insets = packages__flutter__src__painting__edge_insets$46dart.src__painting__edge_insets;
+  const change_notifier = packages__flutter__src__foundation__change_notifier$46dart.src__foundation__change_notifier;
+  const element_registry = packages__scrollable_positioned_list__src__element_registry$46dart.src__element_registry;
+  const scroll_view = packages__scrollable_positioned_list__src__scroll_view$46dart.src__scroll_view;
+  const key = packages__flutter__src__foundation__key$46dart.src__foundation__key;
+  const binding = packages__flutter__src__scheduler__binding$46dart.src__scheduler__binding;
+  const box = packages__flutter__src__rendering__layer$46dart.src__rendering__box;
+  const viewport$ = packages__flutter__src__rendering__sliver$46dart.src__rendering__viewport;
+  const curves = packages__flutter__src__animation__curves$46dart.src__animation__curves;
+  const animations = packages__flutter__src__animation__listener_helpers$46dart.src__animation__animations;
+  const tween = packages__flutter__src__animation__listener_helpers$46dart.src__animation__tween;
+  const layout_builder = packages__flutter__src__widgets__layout_builder$46dart.src__widgets__layout_builder;
+  const drag_details = packages__flutter__src__gestures__drag_details$46dart.src__gestures__drag_details;
+  const post_mount_callback = packages__scrollable_positioned_list__src__post_mount_callback$46dart.src__post_mount_callback;
+  const animation_controller = packages__flutter__src__animation__animation_controller$46dart.src__animation__animation_controller;
+  const tween_sequence = packages__flutter__src__animation__tween_sequence$46dart.src__animation__tween_sequence;
+  var positioned_list = Object.create(dart.library);
+  var scrollable_positioned_list = Object.create(dart.library);
+  var item_positions_notifier = Object.create(dart.library);
+  var item_positions_listener = Object.create(dart.library);
+  var $add = dartx.add;
+  var $isEven = dartx.isEven;
+  var $truncate = dartx.truncate;
+  var $round = dartx.round;
+  var $length = dartx.length;
+  var $firstWhere = dartx.firstWhere;
+  var $_get = dartx._get;
+  var $where = dartx.where;
+  var $isNotEmpty = dartx.isNotEmpty;
+  var $reduce = dartx.reduce;
+  var $runtimeType = dartx.runtimeType;
+  var $hashCode = dartx.hashCode;
+  var $_equals = dartx._equals;
+  var $toString = dartx.toString;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    ElementL: () => (T.ElementL = dart.constFn(dart.legacy(framework.Element)))(),
+    SetOfElementL: () => (T.SetOfElementL = dart.constFn(core.Set$(T.ElementL())))(),
+    SetLOfElementL: () => (T.SetLOfElementL = dart.constFn(dart.legacy(T.SetOfElementL())))(),
+    ValueNotifierOfSetLOfElementL: () => (T.ValueNotifierOfSetLOfElementL = dart.constFn(change_notifier.ValueNotifier$(T.SetLOfElementL())))(),
+    PositionedListL: () => (T.PositionedListL = dart.constFn(dart.legacy(positioned_list.PositionedList)))(),
+    WidgetL: () => (T.WidgetL = dart.constFn(dart.legacy(framework.Widget)))(),
+    JSArrayOfWidgetL: () => (T.JSArrayOfWidgetL = dart.constFn(_interceptors.JSArray$(T.WidgetL())))(),
+    BuildContextL: () => (T.BuildContextL = dart.constFn(dart.legacy(framework.BuildContext)))(),
+    intL: () => (T.intL = dart.constFn(dart.legacy(core.int)))(),
+    BuildContextLAndintLToWidgetL: () => (T.BuildContextLAndintLToWidgetL = dart.constFn(dart.fnType(T.WidgetL(), [T.BuildContextL(), T.intL()])))(),
+    _LocationL: () => (T._LocationL = dart.constFn(dart.legacy(widget_inspector._Location)))(),
+    ValueKeyOfintL: () => (T.ValueKeyOfintL = dart.constFn(key.ValueKey$(T.intL())))(),
+    ItemPositionL: () => (T.ItemPositionL = dart.constFn(dart.legacy(item_positions_listener.ItemPosition)))(),
+    JSArrayOfItemPositionL: () => (T.JSArrayOfItemPositionL = dart.constFn(_interceptors.JSArray$(T.ItemPositionL())))(),
+    RenderBoxL: () => (T.RenderBoxL = dart.constFn(dart.legacy(box.RenderBox)))(),
+    RenderViewportL: () => (T.RenderViewportL = dart.constFn(dart.legacy(viewport$.RenderViewport)))(),
+    ValueKeyLOfintL: () => (T.ValueKeyLOfintL = dart.constFn(dart.legacy(T.ValueKeyOfintL())))(),
+    DurationL: () => (T.DurationL = dart.constFn(dart.legacy(core.Duration)))(),
+    DurationLToNull: () => (T.DurationLToNull = dart.constFn(dart.fnType(core.Null, [T.DurationL()])))(),
+    ItemPositionsNotifierL: () => (T.ItemPositionsNotifierL = dart.constFn(dart.legacy(item_positions_notifier.ItemPositionsNotifier)))(),
+    doubleL: () => (T.doubleL = dart.constFn(dart.legacy(core.double)))(),
+    StringL: () => (T.StringL = dart.constFn(dart.legacy(core.String)))(),
+    ValueKeyOfStringL: () => (T.ValueKeyOfStringL = dart.constFn(key.ValueKey$(T.StringL())))(),
+    AlwaysStoppedAnimationOfdoubleL: () => (T.AlwaysStoppedAnimationOfdoubleL = dart.constFn(animations.AlwaysStoppedAnimation$(T.doubleL())))(),
+    VoidToNull: () => (T.VoidToNull = dart.constFn(dart.fnType(core.Null, [])))(),
+    ScrollablePositionedListL: () => (T.ScrollablePositionedListL = dart.constFn(dart.legacy(scrollable_positioned_list.ScrollablePositionedList)))(),
+    DragDownDetailsL: () => (T.DragDownDetailsL = dart.constFn(dart.legacy(drag_details.DragDownDetails)))(),
+    DragDownDetailsLTovoid: () => (T.DragDownDetailsLTovoid = dart.constFn(dart.fnType(dart.void, [T.DragDownDetailsL()])))(),
+    ScrollNotificationL: () => (T.ScrollNotificationL = dart.constFn(dart.legacy(scroll_notification.ScrollNotification)))(),
+    NotificationListenerOfScrollNotificationL: () => (T.NotificationListenerOfScrollNotificationL = dart.constFn(notification_listener.NotificationListener$(T.ScrollNotificationL())))(),
+    boolL: () => (T.boolL = dart.constFn(dart.legacy(core.bool)))(),
+    ScrollNotificationLToboolL: () => (T.ScrollNotificationLToboolL = dart.constFn(dart.fnType(T.boolL(), [T.ScrollNotificationL()])))(),
+    GestureDetectorL: () => (T.GestureDetectorL = dart.constFn(dart.legacy(gesture_detector.GestureDetector)))(),
+    BoxConstraintsL: () => (T.BoxConstraintsL = dart.constFn(dart.legacy(box.BoxConstraints)))(),
+    BuildContextLAndBoxConstraintsLToGestureDetectorL: () => (T.BuildContextLAndBoxConstraintsLToGestureDetectorL = dart.constFn(dart.fnType(T.GestureDetectorL(), [T.BuildContextL(), T.BoxConstraintsL()])))(),
+    ItemPositionLToboolL: () => (T.ItemPositionLToboolL = dart.constFn(dart.fnType(T.boolL(), [T.ItemPositionL()])))(),
+    CompleterOfvoid: () => (T.CompleterOfvoid = dart.constFn(async.Completer$(dart.void)))(),
+    FutureOfvoid: () => (T.FutureOfvoid = dart.constFn(async.Future$(dart.void)))(),
+    FutureLOfvoid: () => (T.FutureLOfvoid = dart.constFn(dart.legacy(T.FutureOfvoid())))(),
+    JSArrayOfFutureLOfvoid: () => (T.JSArrayOfFutureLOfvoid = dart.constFn(_interceptors.JSArray$(T.FutureLOfvoid())))(),
+    TweenSequenceOfdoubleL: () => (T.TweenSequenceOfdoubleL = dart.constFn(tween_sequence.TweenSequence$(T.doubleL())))(),
+    TweenSequenceItemOfdoubleL: () => (T.TweenSequenceItemOfdoubleL = dart.constFn(tween_sequence.TweenSequenceItem$(T.doubleL())))(),
+    ConstantTweenOfdoubleL: () => (T.ConstantTweenOfdoubleL = dart.constFn(tween.ConstantTween$(T.doubleL())))(),
+    TweenOfdoubleL: () => (T.TweenOfdoubleL = dart.constFn(tween.Tween$(T.doubleL())))(),
+    TweenSequenceItemLOfdoubleL: () => (T.TweenSequenceItemLOfdoubleL = dart.constFn(dart.legacy(T.TweenSequenceItemOfdoubleL())))(),
+    JSArrayOfTweenSequenceItemLOfdoubleL: () => (T.JSArrayOfTweenSequenceItemLOfdoubleL = dart.constFn(_interceptors.JSArray$(T.TweenSequenceItemLOfdoubleL())))(),
+    ItemPositionLAndItemPositionLToItemPositionL: () => (T.ItemPositionLAndItemPositionLToItemPositionL = dart.constFn(dart.fnType(T.ItemPositionL(), [T.ItemPositionL(), T.ItemPositionL()])))(),
+    IterableOfItemPositionL: () => (T.IterableOfItemPositionL = dart.constFn(core.Iterable$(T.ItemPositionL())))(),
+    IterableLOfItemPositionL: () => (T.IterableLOfItemPositionL = dart.constFn(dart.legacy(T.IterableOfItemPositionL())))(),
+    ValueNotifierOfIterableLOfItemPositionL: () => (T.ValueNotifierOfIterableLOfItemPositionL = dart.constFn(change_notifier.ValueNotifier$(T.IterableLOfItemPositionL())))()
+  };
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: basic_types.Axis.prototype,
+        [_name]: "Axis.vertical",
+        index: 1
+      });
+    },
+    get C3() {
+      return C[3] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "delegate",
+        [_Location_column]: 19,
+        [_Location_line]: 172,
+        [_Location_file]: null
+      });
+    },
+    get C2() {
+      return C[2] = dart.constList([C[3] || CT.C3], T._LocationL());
+    },
+    get C1() {
+      return C[1] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[2] || CT.C2,
+        [_Location_name]: null,
+        [_Location_column]: 25,
+        [_Location_line]: 171,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart"
+      });
+    },
+    get C6() {
+      return C[6] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "padding",
+        [_Location_column]: 17,
+        [_Location_line]: 170,
+        [_Location_file]: null
+      });
+    },
+    get C7() {
+      return C[7] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "sliver",
+        [_Location_column]: 17,
+        [_Location_line]: 171,
+        [_Location_file]: null
+      });
+    },
+    get C5() {
+      return C[5] = dart.constList([C[6] || CT.C6, C[7] || CT.C7], T._LocationL());
+    },
+    get C4() {
+      return C[4] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[5] || CT.C5,
+        [_Location_name]: null,
+        [_Location_column]: 15,
+        [_Location_line]: 169,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart"
+      });
+    },
+    get C10() {
+      return C[10] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "delegate",
+        [_Location_column]: 17,
+        [_Location_line]: 190,
+        [_Location_file]: null
+      });
+    },
+    get C9() {
+      return C[9] = dart.constList([C[10] || CT.C10], T._LocationL());
+    },
+    get C8() {
+      return C[8] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[9] || CT.C9,
+        [_Location_name]: null,
+        [_Location_column]: 23,
+        [_Location_line]: 189,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart"
+      });
+    },
+    get C13() {
+      return C[13] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 15,
+        [_Location_line]: 187,
+        [_Location_file]: null
+      });
+    },
+    get C14() {
+      return C[14] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "padding",
+        [_Location_column]: 15,
+        [_Location_line]: 188,
+        [_Location_file]: null
+      });
+    },
+    get C15() {
+      return C[15] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "sliver",
+        [_Location_column]: 15,
+        [_Location_line]: 189,
+        [_Location_file]: null
+      });
+    },
+    get C12() {
+      return C[12] = dart.constList([C[13] || CT.C13, C[14] || CT.C14, C[15] || CT.C15], T._LocationL());
+    },
+    get C11() {
+      return C[11] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[12] || CT.C12,
+        [_Location_name]: null,
+        [_Location_column]: 13,
+        [_Location_line]: 186,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart"
+      });
+    },
+    get C18() {
+      return C[18] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "delegate",
+        [_Location_column]: 19,
+        [_Location_line]: 207,
+        [_Location_file]: null
+      });
+    },
+    get C17() {
+      return C[17] = dart.constList([C[18] || CT.C18], T._LocationL());
+    },
+    get C16() {
+      return C[16] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[17] || CT.C17,
+        [_Location_name]: null,
+        [_Location_column]: 25,
+        [_Location_line]: 206,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart"
+      });
+    },
+    get C21() {
+      return C[21] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "padding",
+        [_Location_column]: 17,
+        [_Location_line]: 205,
+        [_Location_file]: null
+      });
+    },
+    get C22() {
+      return C[22] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "sliver",
+        [_Location_column]: 17,
+        [_Location_line]: 206,
+        [_Location_file]: null
+      });
+    },
+    get C20() {
+      return C[20] = dart.constList([C[21] || CT.C21, C[22] || CT.C22], T._LocationL());
+    },
+    get C19() {
+      return C[19] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[20] || CT.C20,
+        [_Location_name]: null,
+        [_Location_column]: 15,
+        [_Location_line]: 204,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart"
+      });
+    },
+    get C25() {
+      return C[25] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "anchor",
+        [_Location_column]: 11,
+        [_Location_line]: 159,
+        [_Location_file]: null
+      });
+    },
+    get C26() {
+      return C[26] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "center",
+        [_Location_column]: 11,
+        [_Location_line]: 160,
+        [_Location_file]: null
+      });
+    },
+    get C27() {
+      return C[27] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "controller",
+        [_Location_column]: 11,
+        [_Location_line]: 161,
+        [_Location_file]: null
+      });
+    },
+    get C28() {
+      return C[28] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "scrollDirection",
+        [_Location_column]: 11,
+        [_Location_line]: 162,
+        [_Location_file]: null
+      });
+    },
+    get C29() {
+      return C[29] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "reverse",
+        [_Location_column]: 11,
+        [_Location_line]: 163,
+        [_Location_file]: null
+      });
+    },
+    get C30() {
+      return C[30] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "cacheExtent",
+        [_Location_column]: 11,
+        [_Location_line]: 164,
+        [_Location_file]: null
+      });
+    },
+    get C31() {
+      return C[31] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "physics",
+        [_Location_column]: 11,
+        [_Location_line]: 165,
+        [_Location_file]: null
+      });
+    },
+    get C32() {
+      return C[32] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "semanticChildCount",
+        [_Location_column]: 11,
+        [_Location_line]: 166,
+        [_Location_file]: null
+      });
+    },
+    get C33() {
+      return C[33] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "slivers",
+        [_Location_column]: 11,
+        [_Location_line]: 167,
+        [_Location_file]: null
+      });
+    },
+    get C24() {
+      return C[24] = dart.constList([C[25] || CT.C25, C[26] || CT.C26, C[27] || CT.C27, C[28] || CT.C28, C[29] || CT.C29, C[30] || CT.C30, C[31] || CT.C31, C[32] || CT.C32, C[33] || CT.C33], T._LocationL());
+    },
+    get C23() {
+      return C[23] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[24] || CT.C24,
+        [_Location_name]: null,
+        [_Location_column]: 16,
+        [_Location_line]: 158,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart"
+      });
+    },
+    get C36() {
+      return C[36] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "elementNotifier",
+        [_Location_column]: 9,
+        [_Location_line]: 157,
+        [_Location_file]: null
+      });
+    },
+    get C37() {
+      return C[37] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 9,
+        [_Location_line]: 158,
+        [_Location_file]: null
+      });
+    },
+    get C35() {
+      return C[35] = dart.constList([C[36] || CT.C36, C[37] || CT.C37], T._LocationL());
+    },
+    get C34() {
+      return C[34] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[35] || CT.C35,
+        [_Location_name]: null,
+        [_Location_column]: 41,
+        [_Location_line]: 156,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart"
+      });
+    },
+    get C40() {
+      return C[40] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "index",
+        [_Location_column]: 15,
+        [_Location_line]: 238,
+        [_Location_file]: null
+      });
+    },
+    get C41() {
+      return C[41] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 29,
+        [_Location_line]: 238,
+        [_Location_file]: null
+      });
+    },
+    get C39() {
+      return C[39] = dart.constList([C[40] || CT.C40, C[41] || CT.C41], T._LocationL());
+    },
+    get C38() {
+      return C[38] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[39] || CT.C39,
+        [_Location_name]: null,
+        [_Location_column]: 13,
+        [_Location_line]: 237,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart"
+      });
+    },
+    get C44() {
+      return C[44] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 7,
+        [_Location_line]: 235,
+        [_Location_file]: null
+      });
+    },
+    get C45() {
+      return C[45] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 236,
+        [_Location_file]: null
+      });
+    },
+    get C43() {
+      return C[43] = dart.constList([C[44] || CT.C44, C[45] || CT.C45], T._LocationL());
+    },
+    get C42() {
+      return C[42] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[43] || CT.C43,
+        [_Location_name]: null,
+        [_Location_column]: 12,
+        [_Location_line]: 234,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart"
+      });
+    },
+    get C46() {
+      return C[46] = dart.const({
+        __proto__: curves._Linear.prototype
+      });
+    },
+    get C47() {
+      return C[47] = dart.constList([40, 20, 40], T.doubleL());
+    },
+    get C48() {
+      return C[48] = dart.const({
+        __proto__: T.ValueKeyOfStringL().prototype,
+        [ValueKey_value]: "Ping"
+      });
+    },
+    get C49() {
+      return C[49] = dart.const({
+        __proto__: T.ValueKeyOfStringL().prototype,
+        [ValueKey_value]: "Pong"
+      });
+    },
+    get C50() {
+      return C[50] = dart.const({
+        __proto__: T.AlwaysStoppedAnimationOfdoubleL().prototype,
+        [AlwaysStoppedAnimation_value]: 0
+      });
+    },
+    get C53() {
+      return C[53] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "itemBuilder",
+        [_Location_column]: 23,
+        [_Location_line]: 340,
+        [_Location_file]: null
+      });
+    },
+    get C54() {
+      return C[54] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "separatorBuilder",
+        [_Location_column]: 23,
+        [_Location_line]: 341,
+        [_Location_file]: null
+      });
+    },
+    get C55() {
+      return C[55] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "itemCount",
+        [_Location_column]: 23,
+        [_Location_line]: 342,
+        [_Location_file]: null
+      });
+    },
+    get C56() {
+      return C[56] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "positionedIndex",
+        [_Location_column]: 23,
+        [_Location_line]: 343,
+        [_Location_file]: null
+      });
+    },
+    get C57() {
+      return C[57] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "controller",
+        [_Location_column]: 23,
+        [_Location_line]: 344,
+        [_Location_file]: null
+      });
+    },
+    get C58() {
+      return C[58] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "itemPositionsNotifier",
+        [_Location_column]: 23,
+        [_Location_line]: 345,
+        [_Location_file]: null
+      });
+    },
+    get C59() {
+      return C[59] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "scrollDirection",
+        [_Location_column]: 23,
+        [_Location_line]: 346,
+        [_Location_file]: null
+      });
+    },
+    get C60() {
+      return C[60] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "reverse",
+        [_Location_column]: 23,
+        [_Location_line]: 347,
+        [_Location_file]: null
+      });
+    },
+    get C61() {
+      return C[61] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "cacheExtent",
+        [_Location_column]: 23,
+        [_Location_line]: 348,
+        [_Location_file]: null
+      });
+    },
+    get C62() {
+      return C[62] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "alignment",
+        [_Location_column]: 23,
+        [_Location_line]: 349,
+        [_Location_file]: null
+      });
+    },
+    get C63() {
+      return C[63] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "physics",
+        [_Location_column]: 23,
+        [_Location_line]: 350,
+        [_Location_file]: null
+      });
+    },
+    get C64() {
+      return C[64] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "addSemanticIndexes",
+        [_Location_column]: 23,
+        [_Location_line]: 351,
+        [_Location_file]: null
+      });
+    },
+    get C65() {
+      return C[65] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "semanticChildCount",
+        [_Location_column]: 23,
+        [_Location_line]: 352,
+        [_Location_file]: null
+      });
+    },
+    get C66() {
+      return C[66] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "padding",
+        [_Location_column]: 23,
+        [_Location_line]: 353,
+        [_Location_file]: null
+      });
+    },
+    get C67() {
+      return C[67] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "addAutomaticKeepAlives",
+        [_Location_column]: 23,
+        [_Location_line]: 354,
+        [_Location_file]: null
+      });
+    },
+    get C68() {
+      return C[68] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "addRepaintBoundaries",
+        [_Location_column]: 23,
+        [_Location_line]: 355,
+        [_Location_file]: null
+      });
+    },
+    get C52() {
+      return C[52] = dart.constList([C[53] || CT.C53, C[54] || CT.C54, C[55] || CT.C55, C[56] || CT.C56, C[57] || CT.C57, C[58] || CT.C58, C[59] || CT.C59, C[60] || CT.C60, C[61] || CT.C61, C[62] || CT.C62, C[63] || CT.C63, C[64] || CT.C64, C[65] || CT.C65, C[66] || CT.C66, C[67] || CT.C67, C[68] || CT.C68], T._LocationL());
+    },
+    get C51() {
+      return C[51] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[52] || CT.C52,
+        [_Location_name]: null,
+        [_Location_column]: 28,
+        [_Location_line]: 339,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    },
+    get C71() {
+      return C[71] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "onNotification",
+        [_Location_column]: 21,
+        [_Location_line]: 338,
+        [_Location_file]: null
+      });
+    },
+    get C72() {
+      return C[72] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 21,
+        [_Location_line]: 339,
+        [_Location_file]: null
+      });
+    },
+    get C70() {
+      return C[70] = dart.constList([C[71] || CT.C71, C[72] || CT.C72], T._LocationL());
+    },
+    get C69() {
+      return C[69] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[70] || CT.C70,
+        [_Location_name]: null,
+        [_Location_column]: 26,
+        [_Location_line]: 337,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    },
+    get C75() {
+      return C[75] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "opacity",
+        [_Location_column]: 19,
+        [_Location_line]: 336,
+        [_Location_file]: null
+      });
+    },
+    get C76() {
+      return C[76] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 19,
+        [_Location_line]: 337,
+        [_Location_file]: null
+      });
+    },
+    get C74() {
+      return C[74] = dart.constList([C[75] || CT.C75, C[76] || CT.C76], T._LocationL());
+    },
+    get C73() {
+      return C[73] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[74] || CT.C74,
+        [_Location_name]: null,
+        [_Location_column]: 24,
+        [_Location_line]: 335,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    },
+    get C79() {
+      return C[79] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 17,
+        [_Location_line]: 333,
+        [_Location_file]: null
+      });
+    },
+    get C80() {
+      return C[80] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "callback",
+        [_Location_column]: 17,
+        [_Location_line]: 334,
+        [_Location_file]: null
+      });
+    },
+    get C81() {
+      return C[81] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 17,
+        [_Location_line]: 335,
+        [_Location_file]: null
+      });
+    },
+    get C78() {
+      return C[78] = dart.constList([C[79] || CT.C79, C[80] || CT.C80, C[81] || CT.C81], T._LocationL());
+    },
+    get C77() {
+      return C[77] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[78] || CT.C78,
+        [_Location_name]: null,
+        [_Location_column]: 15,
+        [_Location_line]: 332,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    },
+    get C84() {
+      return C[84] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "itemBuilder",
+        [_Location_column]: 25,
+        [_Location_line]: 369,
+        [_Location_file]: null
+      });
+    },
+    get C85() {
+      return C[85] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "separatorBuilder",
+        [_Location_column]: 25,
+        [_Location_line]: 370,
+        [_Location_file]: null
+      });
+    },
+    get C86() {
+      return C[86] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "itemCount",
+        [_Location_column]: 25,
+        [_Location_line]: 371,
+        [_Location_file]: null
+      });
+    },
+    get C87() {
+      return C[87] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "itemPositionsNotifier",
+        [_Location_column]: 25,
+        [_Location_line]: 372,
+        [_Location_file]: null
+      });
+    },
+    get C88() {
+      return C[88] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "positionedIndex",
+        [_Location_column]: 25,
+        [_Location_line]: 373,
+        [_Location_file]: null
+      });
+    },
+    get C89() {
+      return C[89] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "controller",
+        [_Location_column]: 25,
+        [_Location_line]: 374,
+        [_Location_file]: null
+      });
+    },
+    get C90() {
+      return C[90] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "scrollDirection",
+        [_Location_column]: 25,
+        [_Location_line]: 375,
+        [_Location_file]: null
+      });
+    },
+    get C91() {
+      return C[91] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "reverse",
+        [_Location_column]: 25,
+        [_Location_line]: 376,
+        [_Location_file]: null
+      });
+    },
+    get C92() {
+      return C[92] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "cacheExtent",
+        [_Location_column]: 25,
+        [_Location_line]: 377,
+        [_Location_file]: null
+      });
+    },
+    get C93() {
+      return C[93] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "alignment",
+        [_Location_column]: 25,
+        [_Location_line]: 378,
+        [_Location_file]: null
+      });
+    },
+    get C94() {
+      return C[94] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "physics",
+        [_Location_column]: 25,
+        [_Location_line]: 379,
+        [_Location_file]: null
+      });
+    },
+    get C95() {
+      return C[95] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "addSemanticIndexes",
+        [_Location_column]: 25,
+        [_Location_line]: 380,
+        [_Location_file]: null
+      });
+    },
+    get C96() {
+      return C[96] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "semanticChildCount",
+        [_Location_column]: 25,
+        [_Location_line]: 381,
+        [_Location_file]: null
+      });
+    },
+    get C97() {
+      return C[97] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "padding",
+        [_Location_column]: 25,
+        [_Location_line]: 382,
+        [_Location_file]: null
+      });
+    },
+    get C98() {
+      return C[98] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "addAutomaticKeepAlives",
+        [_Location_column]: 25,
+        [_Location_line]: 383,
+        [_Location_file]: null
+      });
+    },
+    get C99() {
+      return C[99] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "addRepaintBoundaries",
+        [_Location_column]: 25,
+        [_Location_line]: 384,
+        [_Location_file]: null
+      });
+    },
+    get C83() {
+      return C[83] = dart.constList([C[84] || CT.C84, C[85] || CT.C85, C[86] || CT.C86, C[87] || CT.C87, C[88] || CT.C88, C[89] || CT.C89, C[90] || CT.C90, C[91] || CT.C91, C[92] || CT.C92, C[93] || CT.C93, C[94] || CT.C94, C[95] || CT.C95, C[96] || CT.C96, C[97] || CT.C97, C[98] || CT.C98, C[99] || CT.C99], T._LocationL());
+    },
+    get C82() {
+      return C[82] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[83] || CT.C83,
+        [_Location_name]: null,
+        [_Location_column]: 30,
+        [_Location_line]: 368,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    },
+    get C102() {
+      return C[102] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "onNotification",
+        [_Location_column]: 23,
+        [_Location_line]: 367,
+        [_Location_file]: null
+      });
+    },
+    get C103() {
+      return C[103] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 23,
+        [_Location_line]: 368,
+        [_Location_file]: null
+      });
+    },
+    get C101() {
+      return C[101] = dart.constList([C[102] || CT.C102, C[103] || CT.C103], T._LocationL());
+    },
+    get C100() {
+      return C[100] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[101] || CT.C101,
+        [_Location_name]: null,
+        [_Location_column]: 28,
+        [_Location_line]: 366,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    },
+    get C106() {
+      return C[106] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "opacity",
+        [_Location_column]: 21,
+        [_Location_line]: 365,
+        [_Location_file]: null
+      });
+    },
+    get C107() {
+      return C[107] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 21,
+        [_Location_line]: 366,
+        [_Location_file]: null
+      });
+    },
+    get C105() {
+      return C[105] = dart.constList([C[106] || CT.C106, C[107] || CT.C107], T._LocationL());
+    },
+    get C104() {
+      return C[104] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[105] || CT.C105,
+        [_Location_name]: null,
+        [_Location_column]: 26,
+        [_Location_line]: 364,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    },
+    get C110() {
+      return C[110] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 19,
+        [_Location_line]: 362,
+        [_Location_file]: null
+      });
+    },
+    get C111() {
+      return C[111] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "callback",
+        [_Location_column]: 19,
+        [_Location_line]: 363,
+        [_Location_file]: null
+      });
+    },
+    get C112() {
+      return C[112] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 19,
+        [_Location_line]: 364,
+        [_Location_file]: null
+      });
+    },
+    get C109() {
+      return C[109] = dart.constList([C[110] || CT.C110, C[111] || CT.C111, C[112] || CT.C112], T._LocationL());
+    },
+    get C108() {
+      return C[108] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[109] || CT.C109,
+        [_Location_name]: null,
+        [_Location_column]: 17,
+        [_Location_line]: 361,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    },
+    get C115() {
+      return C[115] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "children",
+        [_Location_column]: 13,
+        [_Location_line]: 331,
+        [_Location_file]: null
+      });
+    },
+    get C114() {
+      return C[114] = dart.constList([C[115] || CT.C115], T._LocationL());
+    },
+    get C113() {
+      return C[113] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[114] || CT.C114,
+        [_Location_name]: null,
+        [_Location_column]: 18,
+        [_Location_line]: 330,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    },
+    get C118() {
+      return C[118] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "onPanDown",
+        [_Location_column]: 11,
+        [_Location_line]: 328,
+        [_Location_file]: null
+      });
+    },
+    get C119() {
+      return C[119] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "excludeFromSemantics",
+        [_Location_column]: 11,
+        [_Location_line]: 329,
+        [_Location_file]: null
+      });
+    },
+    get C120() {
+      return C[120] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 11,
+        [_Location_line]: 330,
+        [_Location_file]: null
+      });
+    },
+    get C117() {
+      return C[117] = dart.constList([C[118] || CT.C118, C[119] || CT.C119, C[120] || CT.C120], T._LocationL());
+    },
+    get C116() {
+      return C[116] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[117] || CT.C117,
+        [_Location_name]: null,
+        [_Location_column]: 16,
+        [_Location_line]: 327,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    },
+    get C123() {
+      return C[123] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "builder",
+        [_Location_column]: 7,
+        [_Location_line]: 325,
+        [_Location_file]: null
+      });
+    },
+    get C122() {
+      return C[122] = dart.constList([C[123] || CT.C123], T._LocationL());
+    },
+    get C121() {
+      return C[121] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[122] || CT.C122,
+        [_Location_name]: null,
+        [_Location_column]: 12,
+        [_Location_line]: 324,
+        [_Location_file]: "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart"
+      });
+    }
+  }, false);
+  var C = Array(124).fill(void 0);
+  var I = [
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/positioned_list.dart",
+    "package:scrollable_positioned_list/src/positioned_list.dart",
+    "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.1.10/lib/src/scrollable_positioned_list.dart",
+    "package:scrollable_positioned_list/src/scrollable_positioned_list.dart",
+    "package:scrollable_positioned_list/src/item_positions_notifier.dart",
+    "package:scrollable_positioned_list/src/item_positions_listener.dart"
+  ];
+  var itemCount$ = dart.privateName(positioned_list, "PositionedList.itemCount");
+  var itemBuilder$ = dart.privateName(positioned_list, "PositionedList.itemBuilder");
+  var separatorBuilder$ = dart.privateName(positioned_list, "PositionedList.separatorBuilder");
+  var controller$ = dart.privateName(positioned_list, "PositionedList.controller");
+  var itemPositionsNotifier$ = dart.privateName(positioned_list, "PositionedList.itemPositionsNotifier");
+  var positionedIndex$ = dart.privateName(positioned_list, "PositionedList.positionedIndex");
+  var alignment$ = dart.privateName(positioned_list, "PositionedList.alignment");
+  var scrollDirection$ = dart.privateName(positioned_list, "PositionedList.scrollDirection");
+  var reverse$ = dart.privateName(positioned_list, "PositionedList.reverse");
+  var physics$ = dart.privateName(positioned_list, "PositionedList.physics");
+  var cacheExtent$ = dart.privateName(positioned_list, "PositionedList.cacheExtent");
+  var semanticChildCount$ = dart.privateName(positioned_list, "PositionedList.semanticChildCount");
+  var addSemanticIndexes$ = dart.privateName(positioned_list, "PositionedList.addSemanticIndexes");
+  var padding$ = dart.privateName(positioned_list, "PositionedList.padding");
+  var addRepaintBoundaries$ = dart.privateName(positioned_list, "PositionedList.addRepaintBoundaries");
+  var addAutomaticKeepAlives$ = dart.privateName(positioned_list, "PositionedList.addAutomaticKeepAlives");
+  var _name = dart.privateName(basic_types, "_name");
+  positioned_list.PositionedList = class PositionedList extends framework.StatefulWidget {
+    get itemCount() {
+      return this[itemCount$];
+    }
+    set itemCount(value) {
+      super.itemCount = value;
+    }
+    get itemBuilder() {
+      return this[itemBuilder$];
+    }
+    set itemBuilder(value) {
+      super.itemBuilder = value;
+    }
+    get separatorBuilder() {
+      return this[separatorBuilder$];
+    }
+    set separatorBuilder(value) {
+      super.separatorBuilder = value;
+    }
+    get controller() {
+      return this[controller$];
+    }
+    set controller(value) {
+      super.controller = value;
+    }
+    get itemPositionsNotifier() {
+      return this[itemPositionsNotifier$];
+    }
+    set itemPositionsNotifier(value) {
+      super.itemPositionsNotifier = value;
+    }
+    get positionedIndex() {
+      return this[positionedIndex$];
+    }
+    set positionedIndex(value) {
+      super.positionedIndex = value;
+    }
+    get alignment() {
+      return this[alignment$];
+    }
+    set alignment(value) {
+      super.alignment = value;
+    }
+    get scrollDirection() {
+      return this[scrollDirection$];
+    }
+    set scrollDirection(value) {
+      super.scrollDirection = value;
+    }
+    get reverse() {
+      return this[reverse$];
+    }
+    set reverse(value) {
+      super.reverse = value;
+    }
+    get physics() {
+      return this[physics$];
+    }
+    set physics(value) {
+      super.physics = value;
+    }
+    get cacheExtent() {
+      return this[cacheExtent$];
+    }
+    set cacheExtent(value) {
+      super.cacheExtent = value;
+    }
+    get semanticChildCount() {
+      return this[semanticChildCount$];
+    }
+    set semanticChildCount(value) {
+      super.semanticChildCount = value;
+    }
+    get addSemanticIndexes() {
+      return this[addSemanticIndexes$];
+    }
+    set addSemanticIndexes(value) {
+      super.addSemanticIndexes = value;
+    }
+    get padding() {
+      return this[padding$];
+    }
+    set padding(value) {
+      super.padding = value;
+    }
+    get addRepaintBoundaries() {
+      return this[addRepaintBoundaries$];
+    }
+    set addRepaintBoundaries(value) {
+      super.addRepaintBoundaries = value;
+    }
+    get addAutomaticKeepAlives() {
+      return this[addAutomaticKeepAlives$];
+    }
+    set addAutomaticKeepAlives(value) {
+      super.addAutomaticKeepAlives = value;
+    }
+    createState() {
+      return new positioned_list._PositionedListState.new();
+    }
+  };
+  (positioned_list.PositionedList.new = function(opts) {
+    let itemCount = opts && 'itemCount' in opts ? opts.itemCount : null;
+    let itemBuilder = opts && 'itemBuilder' in opts ? opts.itemBuilder : null;
+    let separatorBuilder = opts && 'separatorBuilder' in opts ? opts.separatorBuilder : null;
+    let controller = opts && 'controller' in opts ? opts.controller : null;
+    let itemPositionsNotifier = opts && 'itemPositionsNotifier' in opts ? opts.itemPositionsNotifier : null;
+    let positionedIndex = opts && 'positionedIndex' in opts ? opts.positionedIndex : 0;
+    let alignment = opts && 'alignment' in opts ? opts.alignment : 0;
+    let scrollDirection = opts && 'scrollDirection' in opts ? opts.scrollDirection : C[0] || CT.C0;
+    let reverse = opts && 'reverse' in opts ? opts.reverse : false;
+    let physics = opts && 'physics' in opts ? opts.physics : null;
+    let padding = opts && 'padding' in opts ? opts.padding : null;
+    let cacheExtent = opts && 'cacheExtent' in opts ? opts.cacheExtent : null;
+    let semanticChildCount = opts && 'semanticChildCount' in opts ? opts.semanticChildCount : null;
+    let addSemanticIndexes = opts && 'addSemanticIndexes' in opts ? opts.addSemanticIndexes : true;
+    let addRepaintBoundaries = opts && 'addRepaintBoundaries' in opts ? opts.addRepaintBoundaries : true;
+    let addAutomaticKeepAlives = opts && 'addAutomaticKeepAlives' in opts ? opts.addAutomaticKeepAlives : true;
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    this[itemCount$] = itemCount;
+    this[itemBuilder$] = itemBuilder;
+    this[separatorBuilder$] = separatorBuilder;
+    this[controller$] = controller;
+    this[itemPositionsNotifier$] = itemPositionsNotifier;
+    this[positionedIndex$] = positionedIndex;
+    this[alignment$] = alignment;
+    this[scrollDirection$] = scrollDirection;
+    this[reverse$] = reverse;
+    this[physics$] = physics;
+    this[padding$] = padding;
+    this[cacheExtent$] = cacheExtent;
+    this[semanticChildCount$] = semanticChildCount;
+    this[addSemanticIndexes$] = addSemanticIndexes;
+    this[addRepaintBoundaries$] = addRepaintBoundaries;
+    this[addAutomaticKeepAlives$] = addAutomaticKeepAlives;
+    if (!(itemCount != null)) dart.assertFailed(null, I[0], 45, 16, "itemCount != null");
+    if (!(itemBuilder != null)) dart.assertFailed(null, I[0], 46, 16, "itemBuilder != null");
+    if (!(positionedIndex === 0 || dart.notNull(positionedIndex) < dart.notNull(itemCount))) dart.assertFailed(null, I[0], 47, 16, "(positionedIndex == 0) || (positionedIndex < itemCount)");
+    positioned_list.PositionedList.__proto__.new.call(this, {$creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = positioned_list.PositionedList.prototype;
+  dart.addTypeTests(positioned_list.PositionedList);
+  dart.addTypeCaches(positioned_list.PositionedList);
+  dart.setMethodSignature(positioned_list.PositionedList, () => ({
+    __proto__: dart.getMethods(positioned_list.PositionedList.__proto__),
+    createState: dart.fnType(dart.legacy(framework.State$(dart.legacy(framework.StatefulWidget))), [])
+  }));
+  dart.setLibraryUri(positioned_list.PositionedList, I[1]);
+  dart.setFieldSignature(positioned_list.PositionedList, () => ({
+    __proto__: dart.getFields(positioned_list.PositionedList.__proto__),
+    itemCount: dart.finalFieldType(dart.legacy(core.int)),
+    itemBuilder: dart.finalFieldType(dart.legacy(dart.fnType(dart.legacy(framework.Widget), [dart.legacy(framework.BuildContext), dart.legacy(core.int)]))),
+    separatorBuilder: dart.finalFieldType(dart.legacy(dart.fnType(dart.legacy(framework.Widget), [dart.legacy(framework.BuildContext), dart.legacy(core.int)]))),
+    controller: dart.finalFieldType(dart.legacy(scroll_controller.ScrollController)),
+    itemPositionsNotifier: dart.finalFieldType(dart.legacy(item_positions_notifier.ItemPositionsNotifier)),
+    positionedIndex: dart.finalFieldType(dart.legacy(core.int)),
+    alignment: dart.finalFieldType(dart.legacy(core.double)),
+    scrollDirection: dart.finalFieldType(dart.legacy(basic_types.Axis)),
+    reverse: dart.finalFieldType(dart.legacy(core.bool)),
+    physics: dart.finalFieldType(dart.legacy(scroll_physics.ScrollPhysics)),
+    cacheExtent: dart.finalFieldType(dart.legacy(core.double)),
+    semanticChildCount: dart.finalFieldType(dart.legacy(core.int)),
+    addSemanticIndexes: dart.finalFieldType(dart.legacy(core.bool)),
+    padding: dart.finalFieldType(dart.legacy(edge_insets.EdgeInsets)),
+    addRepaintBoundaries: dart.finalFieldType(dart.legacy(core.bool)),
+    addAutomaticKeepAlives: dart.finalFieldType(dart.legacy(core.bool))
+  }));
+  var _centerKey = dart.privateName(positioned_list, "_centerKey");
+  var _schedulePositionNotificationUpdate = dart.privateName(positioned_list, "_schedulePositionNotificationUpdate");
+  var _leadingSliverPadding = dart.privateName(positioned_list, "_leadingSliverPadding");
+  var _buildItem = dart.privateName(positioned_list, "_buildItem");
+  var _buildSeparatedListElement = dart.privateName(positioned_list, "_buildSeparatedListElement");
+  var _Location_parameterLocations = dart.privateName(widget_inspector, "_Location.parameterLocations");
+  var _Location_name = dart.privateName(widget_inspector, "_Location.name");
+  var _Location_column = dart.privateName(widget_inspector, "_Location.column");
+  var _Location_line = dart.privateName(widget_inspector, "_Location.line");
+  var _Location_file = dart.privateName(widget_inspector, "_Location.file");
+  var _centerSliverPadding = dart.privateName(positioned_list, "_centerSliverPadding");
+  var _trailingSliverPadding = dart.privateName(positioned_list, "_trailingSliverPadding");
+  positioned_list._PositionedListState = class _PositionedListState extends framework.State$(dart.legacy(positioned_list.PositionedList)) {
+    initState() {
+      let t0;
+      super.initState();
+      this.scrollController = (t0 = this.widget.controller, t0 == null ? new scroll_controller.ScrollController.new() : t0);
+      this.scrollController.addListener(dart.bind(this, _schedulePositionNotificationUpdate));
+      this[_schedulePositionNotificationUpdate]();
+    }
+    dispose() {
+      this.scrollController.removeListener(dart.bind(this, _schedulePositionNotificationUpdate));
+      super.dispose();
+    }
+    didUpdateWidget(oldWidget) {
+      T.PositionedListL().as(oldWidget);
+      super.didUpdateWidget(oldWidget);
+      this[_schedulePositionNotificationUpdate]();
+    }
+    build(context) {
+      let t0;
+      return new element_registry.RegistryWidget.new({elementNotifier: this.registeredElements, child: new scroll_view.UnboundedCustomScrollView.new({anchor: this.widget.alignment, center: this[_centerKey], controller: this.scrollController, scrollDirection: this.widget.scrollDirection, reverse: this.widget.reverse, cacheExtent: this.widget.cacheExtent, physics: this.widget.physics, semanticChildCount: (t0 = this.widget.semanticChildCount, t0 == null ? this.widget.itemCount : t0), slivers: (() => {
+            let t0 = T.JSArrayOfWidgetL().of([]);
+            if (dart.notNull(this.widget.positionedIndex) > 0) t0[$add](new basic.SliverPadding.new({padding: this[_leadingSliverPadding], sliver: new sliver.SliverList.new({delegate: new sliver.SliverChildBuilderDelegate.new(dart.fn((context, index) => this.widget.separatorBuilder == null ? this[_buildItem](dart.notNull(this.widget.positionedIndex) - (dart.notNull(index) + 1)) : this[_buildSeparatedListElement](2 * dart.notNull(this.widget.positionedIndex) - (dart.notNull(index) + 1)), T.BuildContextLAndintLToWidgetL()), {childCount: this.widget.separatorBuilder == null ? this.widget.positionedIndex : 2 * dart.notNull(this.widget.positionedIndex), addSemanticIndexes: false, addRepaintBoundaries: this.widget.addRepaintBoundaries, addAutomaticKeepAlives: this.widget.addAutomaticKeepAlives}), $creationLocationd_0dea112b090073317d4: C[1] || CT.C1}), $creationLocationd_0dea112b090073317d4: C[4] || CT.C4}));
+            t0[$add](new basic.SliverPadding.new({key: this[_centerKey], padding: this[_centerSliverPadding], sliver: new sliver.SliverList.new({delegate: new sliver.SliverChildBuilderDelegate.new(dart.fn((context, index) => this.widget.separatorBuilder == null ? this[_buildItem](dart.notNull(index) + dart.notNull(this.widget.positionedIndex)) : this[_buildSeparatedListElement](dart.notNull(index) + 2 * dart.notNull(this.widget.positionedIndex)), T.BuildContextLAndintLToWidgetL()), {childCount: this.widget.itemCount !== 0 ? 1 : 0, addSemanticIndexes: false, addRepaintBoundaries: this.widget.addRepaintBoundaries, addAutomaticKeepAlives: this.widget.addAutomaticKeepAlives}), $creationLocationd_0dea112b090073317d4: C[8] || CT.C8}), $creationLocationd_0dea112b090073317d4: C[11] || CT.C11}));
+            if (dart.notNull(this.widget.positionedIndex) >= 0 && dart.notNull(this.widget.positionedIndex) < dart.notNull(this.widget.itemCount) - 1) t0[$add](new basic.SliverPadding.new({padding: this[_trailingSliverPadding], sliver: new sliver.SliverList.new({delegate: new sliver.SliverChildBuilderDelegate.new(dart.fn((context, index) => this.widget.separatorBuilder == null ? this[_buildItem](dart.notNull(index) + dart.notNull(this.widget.positionedIndex) + 1) : this[_buildSeparatedListElement](dart.notNull(index) + 2 * dart.notNull(this.widget.positionedIndex) + 1), T.BuildContextLAndintLToWidgetL()), {childCount: this.widget.separatorBuilder == null ? dart.notNull(this.widget.itemCount) - dart.notNull(this.widget.positionedIndex) - 1 : 2 * (dart.notNull(this.widget.itemCount) - dart.notNull(this.widget.positionedIndex) - 1), addSemanticIndexes: false, addRepaintBoundaries: this.widget.addRepaintBoundaries, addAutomaticKeepAlives: this.widget.addAutomaticKeepAlives}), $creationLocationd_0dea112b090073317d4: C[16] || CT.C16}), $creationLocationd_0dea112b090073317d4: C[19] || CT.C19}));
+            return t0;
+          })(), $creationLocationd_0dea112b090073317d4: C[23] || CT.C23}), $creationLocationd_0dea112b090073317d4: C[34] || CT.C34});
+    }
+    [_buildSeparatedListElement](index) {
+      let t3, t2, t1;
+      if (index[$isEven]) {
+        return this[_buildItem]((dart.notNull(index) / 2)[$truncate]());
+      } else {
+        t1 = this.widget;
+        t2 = this.context;
+        t3 = (dart.notNull(index) / 2)[$truncate]();
+        return t1.separatorBuilder(t2, t3);
+      }
+    }
+    [_buildItem](index) {
+      let t3, t2, t1, t3$, t2$, t1$;
+      return new element_registry.RegisteredElementWidget.new({key: new (T.ValueKeyOfintL()).new(index), child: dart.test(this.widget.addSemanticIndexes) ? new basic.IndexedSemantics.new({index: index, child: (t1 = this.widget, t2 = this.context, t3 = index, t1.itemBuilder(t2, t3)), $creationLocationd_0dea112b090073317d4: C[38] || CT.C38}) : (t1$ = this.widget, t2$ = this.context, t3$ = index, t1$.itemBuilder(t2$, t3$)), $creationLocationd_0dea112b090073317d4: C[42] || CT.C42});
+    }
+    get [_leadingSliverPadding]() {
+      let t1, t1$, t1$0, t1$1, t1$2;
+      t1$2 = this.widget.scrollDirection == basic_types.Axis.vertical ? dart.test(this.widget.reverse) ? (t1 = this.widget.padding, t1 == null ? null : t1.copyWith({top: 0.0})) : (t1$ = this.widget.padding, t1$ == null ? null : t1$.copyWith({bottom: 0.0})) : dart.test(this.widget.reverse) ? (t1$0 = this.widget.padding, t1$0 == null ? null : t1$0.copyWith({left: 0.0})) : (t1$1 = this.widget.padding, t1$1 == null ? null : t1$1.copyWith({right: 0.0}));
+      return t1$2 == null ? new edge_insets.EdgeInsets.all(0.0) : t1$2;
+    }
+    get [_centerSliverPadding]() {
+      let t1, t1$, t1$0, t1$1, t1$2, t1$3, t1$4, t1$5;
+      return this.widget.scrollDirection == basic_types.Axis.vertical ? dart.test(this.widget.reverse) ? (t1$ = (t1 = this.widget.padding, t1 == null ? null : t1.copyWith({top: this.widget.positionedIndex === dart.notNull(this.widget.itemCount) - 1 ? this.widget.padding.top : 0.0, bottom: this.widget.positionedIndex === 0 ? this.widget.padding.bottom : 0.0})), t1$ == null ? new edge_insets.EdgeInsets.all(0.0) : t1$) : (t1$1 = (t1$0 = this.widget.padding, t1$0 == null ? null : t1$0.copyWith({top: this.widget.positionedIndex === 0 ? this.widget.padding.top : 0.0, bottom: this.widget.positionedIndex === dart.notNull(this.widget.itemCount) - 1 ? this.widget.padding.bottom : 0.0})), t1$1 == null ? new edge_insets.EdgeInsets.all(0.0) : t1$1) : dart.test(this.widget.reverse) ? (t1$3 = (t1$2 = this.widget.padding, t1$2 == null ? null : t1$2.copyWith({left: this.widget.positionedIndex === dart.notNull(this.widget.itemCount) - 1 ? this.widget.padding.left : 0.0, right: this.widget.positionedIndex === 0 ? this.widget.padding.right : 0.0})), t1$3 == null ? new edge_insets.EdgeInsets.all(0.0) : t1$3) : (t1$5 = (t1$4 = this.widget.padding, t1$4 == null ? null : t1$4.copyWith({left: this.widget.positionedIndex === 0 ? this.widget.padding.left : 0.0, right: this.widget.positionedIndex === dart.notNull(this.widget.itemCount) - 1 ? this.widget.padding.right : 0.0})), t1$5 == null ? new edge_insets.EdgeInsets.all(0.0) : t1$5);
+    }
+    get [_trailingSliverPadding]() {
+      let t1, t1$, t1$0, t1$1, t1$2, t1$3, t1$4, t1$5;
+      return this.widget.scrollDirection == basic_types.Axis.vertical ? dart.test(this.widget.reverse) ? (t1$ = (t1 = this.widget.padding, t1 == null ? null : t1.copyWith({bottom: 0.0})), t1$ == null ? new edge_insets.EdgeInsets.all(0.0) : t1$) : (t1$1 = (t1$0 = this.widget.padding, t1$0 == null ? null : t1$0.copyWith({top: 0.0})), t1$1 == null ? new edge_insets.EdgeInsets.all(0.0) : t1$1) : dart.test(this.widget.reverse) ? (t1$3 = (t1$2 = this.widget.padding, t1$2 == null ? null : t1$2.copyWith({right: 0.0})), t1$3 == null ? new edge_insets.EdgeInsets.all(0.0) : t1$3) : (t1$5 = (t1$4 = this.widget.padding, t1$4 == null ? null : t1$4.copyWith({left: 0.0})), t1$5 == null ? new edge_insets.EdgeInsets.all(0.0) : t1$5);
+    }
+    [_schedulePositionNotificationUpdate]() {
+      if (!dart.test(this.updateScheduled)) {
+        this.updateScheduled = true;
+        binding.SchedulerBinding.instance.addPostFrameCallback(dart.fn(_ => {
+          let t1, t1$;
+          if (this.registeredElements.value == null) {
+            this.updateScheduled = false;
+            return;
+          }
+          let positions = T.JSArrayOfItemPositionL().of([]);
+          let viewport = null;
+          for (let element of this.registeredElements.value) {
+            let box = T.RenderBoxL().as(element.renderObject);
+            viewport == null ? viewport = T.RenderViewportL().as(viewport$.RenderAbstractViewport.of(box)) : null;
+            let key = T.ValueKeyLOfintL().as(element.widget.key);
+            if (this.widget.scrollDirection == basic_types.Axis.vertical) {
+              let reveal = viewport.getOffsetToReveal(box, 0.0).offset;
+              let itemOffset = dart.notNull(reveal) - dart.notNull(viewport.offset.pixels) + dart.notNull(viewport.anchor) * dart.notNull(viewport.size.height);
+              positions[$add](new item_positions_listener.ItemPosition.new({index: key.value, itemLeadingEdge: itemOffset[$round]() / dart.notNull(this.scrollController.position.viewportDimension), itemTrailingEdge: (itemOffset + dart.notNull(box.size.height))[$round]() / dart.notNull(this.scrollController.position.viewportDimension)}));
+            } else {
+              let itemOffset = box.localToGlobal(ui.Offset.zero, {ancestor: viewport}).dx;
+              positions[$add](new item_positions_listener.ItemPosition.new({index: key.value, itemLeadingEdge: (dart.test(this.widget.reverse) ? dart.notNull(this.scrollController.position.viewportDimension) - (dart.notNull(itemOffset) + dart.notNull(box.size.width)) : itemOffset)[$round]() / dart.notNull(this.scrollController.position.viewportDimension), itemTrailingEdge: (dart.test(this.widget.reverse) ? dart.notNull(this.scrollController.position.viewportDimension) - dart.notNull(itemOffset) : dart.notNull(itemOffset) + dart.notNull(box.size.width))[$round]() / dart.notNull(this.scrollController.position.viewportDimension)}));
+            }
+          }
+          t1$ = (t1 = this.widget.itemPositionsNotifier, t1 == null ? null : t1.itemPositions);
+          t1$ == null ? null : t1$.value = positions;
+          this.updateScheduled = false;
+        }, T.DurationLToNull()));
+      }
+    }
+  };
+  (positioned_list._PositionedListState.new = function() {
+    this[_centerKey] = new framework.UniqueKey.new();
+    this.registeredElements = new (T.ValueNotifierOfSetLOfElementL()).new(null);
+    this.scrollController = null;
+    this.updateScheduled = false;
+    positioned_list._PositionedListState.__proto__.new.call(this);
+    ;
+  }).prototype = positioned_list._PositionedListState.prototype;
+  dart.addTypeTests(positioned_list._PositionedListState);
+  dart.addTypeCaches(positioned_list._PositionedListState);
+  dart.setMethodSignature(positioned_list._PositionedListState, () => ({
+    __proto__: dart.getMethods(positioned_list._PositionedListState.__proto__),
+    didUpdateWidget: dart.fnType(dart.void, [dart.legacy(core.Object)]),
+    build: dart.fnType(dart.legacy(framework.Widget), [dart.legacy(framework.BuildContext)]),
+    [_buildSeparatedListElement]: dart.fnType(dart.legacy(framework.Widget), [dart.legacy(core.int)]),
+    [_buildItem]: dart.fnType(dart.legacy(framework.Widget), [dart.legacy(core.int)]),
+    [_schedulePositionNotificationUpdate]: dart.fnType(dart.void, [])
+  }));
+  dart.setGetterSignature(positioned_list._PositionedListState, () => ({
+    __proto__: dart.getGetters(positioned_list._PositionedListState.__proto__),
+    [_leadingSliverPadding]: dart.legacy(edge_insets.EdgeInsets),
+    [_centerSliverPadding]: dart.legacy(edge_insets.EdgeInsets),
+    [_trailingSliverPadding]: dart.legacy(edge_insets.EdgeInsets)
+  }));
+  dart.setLibraryUri(positioned_list._PositionedListState, I[1]);
+  dart.setFieldSignature(positioned_list._PositionedListState, () => ({
+    __proto__: dart.getFields(positioned_list._PositionedListState.__proto__),
+    [_centerKey]: dart.finalFieldType(dart.legacy(key.Key)),
+    registeredElements: dart.finalFieldType(dart.legacy(change_notifier.ValueNotifier$(dart.legacy(core.Set$(dart.legacy(framework.Element)))))),
+    scrollController: dart.fieldType(dart.legacy(scroll_controller.ScrollController)),
+    updateScheduled: dart.fieldType(dart.legacy(core.bool))
+  }));
+  var itemCount$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.itemCount");
+  var itemBuilder$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.itemBuilder");
+  var separatorBuilder$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.separatorBuilder");
+  var itemScrollController$ = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.itemScrollController");
+  var itemPositionsNotifier = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.itemPositionsNotifier");
+  var initialScrollIndex$ = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.initialScrollIndex");
+  var initialAlignment$ = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.initialAlignment");
+  var scrollDirection$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.scrollDirection");
+  var reverse$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.reverse");
+  var physics$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.physics");
+  var semanticChildCount$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.semanticChildCount");
+  var padding$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.padding");
+  var addSemanticIndexes$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.addSemanticIndexes");
+  var addAutomaticKeepAlives$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.addAutomaticKeepAlives");
+  var addRepaintBoundaries$0 = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.addRepaintBoundaries");
+  var minCacheExtent$ = dart.privateName(scrollable_positioned_list, "ScrollablePositionedList.minCacheExtent");
+  scrollable_positioned_list.ScrollablePositionedList = class ScrollablePositionedList extends framework.StatefulWidget {
+    get itemCount() {
+      return this[itemCount$0];
+    }
+    set itemCount(value) {
+      super.itemCount = value;
+    }
+    get itemBuilder() {
+      return this[itemBuilder$0];
+    }
+    set itemBuilder(value) {
+      super.itemBuilder = value;
+    }
+    get separatorBuilder() {
+      return this[separatorBuilder$0];
+    }
+    set separatorBuilder(value) {
+      super.separatorBuilder = value;
+    }
+    get itemScrollController() {
+      return this[itemScrollController$];
+    }
+    set itemScrollController(value) {
+      super.itemScrollController = value;
+    }
+    get itemPositionsNotifier() {
+      return this[itemPositionsNotifier];
+    }
+    set itemPositionsNotifier(value) {
+      super.itemPositionsNotifier = value;
+    }
+    get initialScrollIndex() {
+      return this[initialScrollIndex$];
+    }
+    set initialScrollIndex(value) {
+      super.initialScrollIndex = value;
+    }
+    get initialAlignment() {
+      return this[initialAlignment$];
+    }
+    set initialAlignment(value) {
+      super.initialAlignment = value;
+    }
+    get scrollDirection() {
+      return this[scrollDirection$0];
+    }
+    set scrollDirection(value) {
+      super.scrollDirection = value;
+    }
+    get reverse() {
+      return this[reverse$0];
+    }
+    set reverse(value) {
+      super.reverse = value;
+    }
+    get physics() {
+      return this[physics$0];
+    }
+    set physics(value) {
+      super.physics = value;
+    }
+    get semanticChildCount() {
+      return this[semanticChildCount$0];
+    }
+    set semanticChildCount(value) {
+      super.semanticChildCount = value;
+    }
+    get padding() {
+      return this[padding$0];
+    }
+    set padding(value) {
+      super.padding = value;
+    }
+    get addSemanticIndexes() {
+      return this[addSemanticIndexes$0];
+    }
+    set addSemanticIndexes(value) {
+      super.addSemanticIndexes = value;
+    }
+    get addAutomaticKeepAlives() {
+      return this[addAutomaticKeepAlives$0];
+    }
+    set addAutomaticKeepAlives(value) {
+      super.addAutomaticKeepAlives = value;
+    }
+    get addRepaintBoundaries() {
+      return this[addRepaintBoundaries$0];
+    }
+    set addRepaintBoundaries(value) {
+      super.addRepaintBoundaries = value;
+    }
+    get minCacheExtent() {
+      return this[minCacheExtent$];
+    }
+    set minCacheExtent(value) {
+      super.minCacheExtent = value;
+    }
+    createState() {
+      return new scrollable_positioned_list._ScrollablePositionedListState.new();
+    }
+  };
+  (scrollable_positioned_list.ScrollablePositionedList.builder = function(opts) {
+    let itemCount = opts && 'itemCount' in opts ? opts.itemCount : null;
+    let itemBuilder = opts && 'itemBuilder' in opts ? opts.itemBuilder : null;
+    let key = opts && 'key' in opts ? opts.key : null;
+    let itemScrollController = opts && 'itemScrollController' in opts ? opts.itemScrollController : null;
+    let itemPositionsListener = opts && 'itemPositionsListener' in opts ? opts.itemPositionsListener : null;
+    let initialScrollIndex = opts && 'initialScrollIndex' in opts ? opts.initialScrollIndex : 0;
+    let initialAlignment = opts && 'initialAlignment' in opts ? opts.initialAlignment : 0;
+    let scrollDirection = opts && 'scrollDirection' in opts ? opts.scrollDirection : C[0] || CT.C0;
+    let reverse = opts && 'reverse' in opts ? opts.reverse : false;
+    let physics = opts && 'physics' in opts ? opts.physics : null;
+    let semanticChildCount = opts && 'semanticChildCount' in opts ? opts.semanticChildCount : null;
+    let padding = opts && 'padding' in opts ? opts.padding : null;
+    let addSemanticIndexes = opts && 'addSemanticIndexes' in opts ? opts.addSemanticIndexes : true;
+    let addAutomaticKeepAlives = opts && 'addAutomaticKeepAlives' in opts ? opts.addAutomaticKeepAlives : true;
+    let addRepaintBoundaries = opts && 'addRepaintBoundaries' in opts ? opts.addRepaintBoundaries : true;
+    let minCacheExtent = opts && 'minCacheExtent' in opts ? opts.minCacheExtent : null;
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    this[itemCount$0] = itemCount;
+    this[itemBuilder$0] = itemBuilder;
+    this[itemScrollController$] = itemScrollController;
+    this[initialScrollIndex$] = initialScrollIndex;
+    this[initialAlignment$] = initialAlignment;
+    this[scrollDirection$0] = scrollDirection;
+    this[reverse$0] = reverse;
+    this[physics$0] = physics;
+    this[semanticChildCount$0] = semanticChildCount;
+    this[padding$0] = padding;
+    this[addSemanticIndexes$0] = addSemanticIndexes;
+    this[addAutomaticKeepAlives$0] = addAutomaticKeepAlives;
+    this[addRepaintBoundaries$0] = addRepaintBoundaries;
+    this[minCacheExtent$] = minCacheExtent;
+    if (!(itemCount != null)) dart.assertFailed(null, I[2], 53, 16, "itemCount != null");
+    if (!(itemBuilder != null)) dart.assertFailed(null, I[2], 54, 16, "itemBuilder != null");
+    this[itemPositionsNotifier] = T.ItemPositionsNotifierL().as(itemPositionsListener);
+    this[separatorBuilder$0] = null;
+    scrollable_positioned_list.ScrollablePositionedList.__proto__.new.call(this, {key: key, $creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = scrollable_positioned_list.ScrollablePositionedList.prototype;
+  (scrollable_positioned_list.ScrollablePositionedList.separated = function(opts) {
+    let itemCount = opts && 'itemCount' in opts ? opts.itemCount : null;
+    let itemBuilder = opts && 'itemBuilder' in opts ? opts.itemBuilder : null;
+    let separatorBuilder = opts && 'separatorBuilder' in opts ? opts.separatorBuilder : null;
+    let key = opts && 'key' in opts ? opts.key : null;
+    let itemScrollController = opts && 'itemScrollController' in opts ? opts.itemScrollController : null;
+    let itemPositionsListener = opts && 'itemPositionsListener' in opts ? opts.itemPositionsListener : null;
+    let initialScrollIndex = opts && 'initialScrollIndex' in opts ? opts.initialScrollIndex : 0;
+    let initialAlignment = opts && 'initialAlignment' in opts ? opts.initialAlignment : 0;
+    let scrollDirection = opts && 'scrollDirection' in opts ? opts.scrollDirection : C[0] || CT.C0;
+    let reverse = opts && 'reverse' in opts ? opts.reverse : false;
+    let physics = opts && 'physics' in opts ? opts.physics : null;
+    let semanticChildCount = opts && 'semanticChildCount' in opts ? opts.semanticChildCount : null;
+    let padding = opts && 'padding' in opts ? opts.padding : null;
+    let addSemanticIndexes = opts && 'addSemanticIndexes' in opts ? opts.addSemanticIndexes : true;
+    let addAutomaticKeepAlives = opts && 'addAutomaticKeepAlives' in opts ? opts.addAutomaticKeepAlives : true;
+    let addRepaintBoundaries = opts && 'addRepaintBoundaries' in opts ? opts.addRepaintBoundaries : true;
+    let minCacheExtent = opts && 'minCacheExtent' in opts ? opts.minCacheExtent : null;
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    this[itemCount$0] = itemCount;
+    this[itemBuilder$0] = itemBuilder;
+    this[separatorBuilder$0] = separatorBuilder;
+    this[itemScrollController$] = itemScrollController;
+    this[initialScrollIndex$] = initialScrollIndex;
+    this[initialAlignment$] = initialAlignment;
+    this[scrollDirection$0] = scrollDirection;
+    this[reverse$0] = reverse;
+    this[physics$0] = physics;
+    this[semanticChildCount$0] = semanticChildCount;
+    this[padding$0] = padding;
+    this[addSemanticIndexes$0] = addSemanticIndexes;
+    this[addAutomaticKeepAlives$0] = addAutomaticKeepAlives;
+    this[addRepaintBoundaries$0] = addRepaintBoundaries;
+    this[minCacheExtent$] = minCacheExtent;
+    if (!(itemCount != null)) dart.assertFailed(null, I[2], 79, 16, "itemCount != null");
+    if (!(itemBuilder != null)) dart.assertFailed(null, I[2], 80, 16, "itemBuilder != null");
+    if (!(separatorBuilder != null)) dart.assertFailed(null, I[2], 81, 16, "separatorBuilder != null");
+    this[itemPositionsNotifier] = T.ItemPositionsNotifierL().as(itemPositionsListener);
+    scrollable_positioned_list.ScrollablePositionedList.__proto__.new.call(this, {key: key, $creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = scrollable_positioned_list.ScrollablePositionedList.prototype;
+  dart.addTypeTests(scrollable_positioned_list.ScrollablePositionedList);
+  dart.addTypeCaches(scrollable_positioned_list.ScrollablePositionedList);
+  dart.setMethodSignature(scrollable_positioned_list.ScrollablePositionedList, () => ({
+    __proto__: dart.getMethods(scrollable_positioned_list.ScrollablePositionedList.__proto__),
+    createState: dart.fnType(dart.legacy(framework.State$(dart.legacy(framework.StatefulWidget))), [])
+  }));
+  dart.setLibraryUri(scrollable_positioned_list.ScrollablePositionedList, I[3]);
+  dart.setFieldSignature(scrollable_positioned_list.ScrollablePositionedList, () => ({
+    __proto__: dart.getFields(scrollable_positioned_list.ScrollablePositionedList.__proto__),
+    itemCount: dart.finalFieldType(dart.legacy(core.int)),
+    itemBuilder: dart.finalFieldType(dart.legacy(dart.fnType(dart.legacy(framework.Widget), [dart.legacy(framework.BuildContext), dart.legacy(core.int)]))),
+    separatorBuilder: dart.finalFieldType(dart.legacy(dart.fnType(dart.legacy(framework.Widget), [dart.legacy(framework.BuildContext), dart.legacy(core.int)]))),
+    itemScrollController: dart.finalFieldType(dart.legacy(scrollable_positioned_list.ItemScrollController)),
+    itemPositionsNotifier: dart.finalFieldType(dart.legacy(item_positions_notifier.ItemPositionsNotifier)),
+    initialScrollIndex: dart.finalFieldType(dart.legacy(core.int)),
+    initialAlignment: dart.finalFieldType(dart.legacy(core.double)),
+    scrollDirection: dart.finalFieldType(dart.legacy(basic_types.Axis)),
+    reverse: dart.finalFieldType(dart.legacy(core.bool)),
+    physics: dart.finalFieldType(dart.legacy(scroll_physics.ScrollPhysics)),
+    semanticChildCount: dart.finalFieldType(dart.legacy(core.int)),
+    padding: dart.finalFieldType(dart.legacy(edge_insets.EdgeInsets)),
+    addSemanticIndexes: dart.finalFieldType(dart.legacy(core.bool)),
+    addAutomaticKeepAlives: dart.finalFieldType(dart.legacy(core.bool)),
+    addRepaintBoundaries: dart.finalFieldType(dart.legacy(core.bool)),
+    minCacheExtent: dart.finalFieldType(dart.legacy(core.double))
+  }));
+  var _scrollableListState = dart.privateName(scrollable_positioned_list, "_scrollableListState");
+  var _jumpTo = dart.privateName(scrollable_positioned_list, "_jumpTo");
+  var _scrollTo = dart.privateName(scrollable_positioned_list, "_scrollTo");
+  var _attach = dart.privateName(scrollable_positioned_list, "_attach");
+  var _detach = dart.privateName(scrollable_positioned_list, "_detach");
+  scrollable_positioned_list.ItemScrollController = class ItemScrollController extends core.Object {
+    get isAttached() {
+      return this[_scrollableListState] != null;
+    }
+    jumpTo(opts) {
+      let index = opts && 'index' in opts ? opts.index : null;
+      let alignment = opts && 'alignment' in opts ? opts.alignment : 0;
+      this[_scrollableListState][_jumpTo]({index: index, alignment: alignment});
+    }
+    scrollTo(opts) {
+      let index = opts && 'index' in opts ? opts.index : null;
+      let alignment = opts && 'alignment' in opts ? opts.alignment : 0;
+      let duration = opts && 'duration' in opts ? opts.duration : null;
+      let curve = opts && 'curve' in opts ? opts.curve : C[46] || CT.C46;
+      let opacityAnimationWeights = opts && 'opacityAnimationWeights' in opts ? opts.opacityAnimationWeights : C[47] || CT.C47;
+      if (!(this[_scrollableListState] != null)) dart.assertFailed(null, I[2], 225, 12, "_scrollableListState != null");
+      if (!(opacityAnimationWeights[$length] === 3)) dart.assertFailed(null, I[2], 226, 12, "opacityAnimationWeights.length == 3");
+      if (!dart.test(duration['>'](core.Duration.zero))) dart.assertFailed(null, I[2], 227, 12, "duration > Duration.zero");
+      return this[_scrollableListState][_scrollTo]({index: index, alignment: alignment, duration: duration, curve: curve, opacityAnimationWeights: opacityAnimationWeights});
+    }
+    [_attach](scrollableListState) {
+      if (!(this[_scrollableListState] == null)) dart.assertFailed(null, I[2], 238, 12, "_scrollableListState == null");
+      this[_scrollableListState] = scrollableListState;
+    }
+    [_detach]() {
+      this[_scrollableListState] = null;
+    }
+  };
+  (scrollable_positioned_list.ItemScrollController.new = function() {
+    this[_scrollableListState] = null;
+    ;
+  }).prototype = scrollable_positioned_list.ItemScrollController.prototype;
+  dart.addTypeTests(scrollable_positioned_list.ItemScrollController);
+  dart.addTypeCaches(scrollable_positioned_list.ItemScrollController);
+  dart.setMethodSignature(scrollable_positioned_list.ItemScrollController, () => ({
+    __proto__: dart.getMethods(scrollable_positioned_list.ItemScrollController.__proto__),
+    jumpTo: dart.fnType(dart.void, [], {alignment: dart.legacy(core.double), index: dart.legacy(core.int)}, {}),
+    scrollTo: dart.fnType(dart.legacy(async.Future$(dart.void)), [], {alignment: dart.legacy(core.double), curve: dart.legacy(curves.Curve), duration: dart.legacy(core.Duration), index: dart.legacy(core.int), opacityAnimationWeights: dart.legacy(core.List$(dart.legacy(core.double)))}, {}),
+    [_attach]: dart.fnType(dart.void, [dart.legacy(scrollable_positioned_list._ScrollablePositionedListState)]),
+    [_detach]: dart.fnType(dart.void, [])
+  }));
+  dart.setGetterSignature(scrollable_positioned_list.ItemScrollController, () => ({
+    __proto__: dart.getGetters(scrollable_positioned_list.ItemScrollController.__proto__),
+    isAttached: dart.legacy(core.bool)
+  }));
+  dart.setLibraryUri(scrollable_positioned_list.ItemScrollController, I[3]);
+  dart.setFieldSignature(scrollable_positioned_list.ItemScrollController, () => ({
+    __proto__: dart.getFields(scrollable_positioned_list.ItemScrollController.__proto__),
+    [_scrollableListState]: dart.fieldType(dart.legacy(scrollable_positioned_list._ScrollablePositionedListState))
+  }));
+  var ValueKey_value = dart.privateName(key, "ValueKey.value");
+  var AlwaysStoppedAnimation_value = dart.privateName(animations, "AlwaysStoppedAnimation.value");
+  var _isTransitioning = dart.privateName(scrollable_positioned_list, "_isTransitioning");
+  var _updatePositions = dart.privateName(scrollable_positioned_list, "_updatePositions");
+  var _cacheExtent = dart.privateName(scrollable_positioned_list, "_cacheExtent");
+  var _stopScroll = dart.privateName(scrollable_positioned_list, "_stopScroll");
+  var _startScroll = dart.privateName(scrollable_positioned_list, "_startScroll");
+  var _opacityAnimation = dart.privateName(scrollable_positioned_list, "_opacityAnimation");
+  const State_TickerProviderStateMixin$36 = class State_TickerProviderStateMixin extends framework.State$(dart.legacy(scrollable_positioned_list.ScrollablePositionedList)) {};
+  (State_TickerProviderStateMixin$36.new = function() {
+    ticker_provider.TickerProviderStateMixin$(dart.legacy(scrollable_positioned_list.ScrollablePositionedList))[dart.mixinNew].call(this);
+    State_TickerProviderStateMixin$36.__proto__.new.call(this);
+  }).prototype = State_TickerProviderStateMixin$36.prototype;
+  dart.applyMixin(State_TickerProviderStateMixin$36, ticker_provider.TickerProviderStateMixin$(dart.legacy(scrollable_positioned_list.ScrollablePositionedList)));
+  scrollable_positioned_list._ScrollablePositionedListState = class _ScrollablePositionedListState extends State_TickerProviderStateMixin$36 {
+    initState() {
+      let t1, t1$, t1$0, t1$1, t1$2;
+      super.initState();
+      let initialPosition = T.ItemPositionL().as(page_storage.PageStorage.of(this.context).readState(this.context));
+      this.primary.target = (t1$ = (t1 = initialPosition, t1 == null ? null : t1.index), t1$ == null ? this.widget.initialScrollIndex : t1$);
+      this.primary.alignment = (t1$1 = (t1$0 = initialPosition, t1$0 == null ? null : t1$0.itemLeadingEdge), t1$1 == null ? this.widget.initialAlignment : t1$1);
+      if (dart.notNull(this.widget.itemCount) > 0 && dart.notNull(this.primary.target) > dart.notNull(this.widget.itemCount) - 1) {
+        this.primary.target = dart.notNull(this.widget.itemCount) - 1;
+      }
+      t1$2 = this.widget.itemScrollController;
+      t1$2 == null ? null : t1$2[_attach](this);
+      this.primary.itemPositionsNotifier.itemPositions.addListener(dart.bind(this, _updatePositions));
+      this.secondary.itemPositionsNotifier.itemPositions.addListener(dart.bind(this, _updatePositions));
+    }
+    deactivate() {
+      let t1;
+      t1 = this.widget.itemScrollController;
+      t1 == null ? null : t1[_detach]();
+      super.deactivate();
+    }
+    dispose() {
+      this.primary.itemPositionsNotifier.itemPositions.removeListener(dart.bind(this, _updatePositions));
+      this.secondary.itemPositionsNotifier.itemPositions.removeListener(dart.bind(this, _updatePositions));
+      super.dispose();
+    }
+    didUpdateWidget(oldWidget) {
+      let t1, t1$, t1$0, t1$1, t1$2;
+      T.ScrollablePositionedListL().as(oldWidget);
+      super.didUpdateWidget(oldWidget);
+      if (dart.equals((t1 = oldWidget.itemScrollController, t1 == null ? null : t1[_scrollableListState]), this)) {
+        t1$ = oldWidget.itemScrollController;
+        t1$ == null ? null : t1$[_detach]();
+      }
+      if (!dart.equals((t1$0 = this.widget.itemScrollController, t1$0 == null ? null : t1$0[_scrollableListState]), this)) {
+        t1$1 = this.widget.itemScrollController;
+        t1$1 == null ? null : t1$1[_detach]();
+        t1$2 = this.widget.itemScrollController;
+        t1$2 == null ? null : t1$2[_attach](this);
+      }
+      if (this.widget.itemCount === 0) {
+        this.setState(dart.fn(() => {
+          this.primary.target = 0;
+          this.secondary.target = 0;
+        }, T.VoidToNull()));
+      } else {
+        if (dart.notNull(this.primary.target) > dart.notNull(this.widget.itemCount) - 1) {
+          this.setState(dart.fn(() => {
+            this.primary.target = dart.notNull(this.widget.itemCount) - 1;
+          }, T.VoidToNull()));
+        }
+        if (dart.notNull(this.secondary.target) > dart.notNull(this.widget.itemCount) - 1) {
+          this.setState(dart.fn(() => {
+            this.secondary.target = dart.notNull(this.widget.itemCount) - 1;
+          }, T.VoidToNull()));
+        }
+      }
+    }
+    build(context) {
+      return new layout_builder.LayoutBuilder.new({builder: dart.fn((context, constraints) => {
+          let cacheExtent = this[_cacheExtent](constraints);
+          return new gesture_detector.GestureDetector.new({onPanDown: dart.fn(_ => this[_stopScroll]({canceled: true}), T.DragDownDetailsLTovoid()), excludeFromSemantics: true, child: new basic.Stack.new({children: (() => {
+                let t1 = T.JSArrayOfWidgetL().of([new post_mount_callback.PostMountCallback.new({key: this.primary.key, callback: this.startAnimationCallback, child: new transitions.FadeTransition.new({opacity: new animations.ReverseAnimation.new(this.opacity), child: new (T.NotificationListenerOfScrollNotificationL()).new({onNotification: dart.fn(_ => this[_isTransitioning], T.ScrollNotificationLToboolL()), child: new positioned_list.PositionedList.new({itemBuilder: this.widget.itemBuilder, separatorBuilder: this.widget.separatorBuilder, itemCount: this.widget.itemCount, positionedIndex: this.primary.target, controller: this.primary.scrollController, itemPositionsNotifier: this.primary.itemPositionsNotifier, scrollDirection: this.widget.scrollDirection, reverse: this.widget.reverse, cacheExtent: cacheExtent, alignment: this.primary.alignment, physics: this.widget.physics, addSemanticIndexes: this.widget.addSemanticIndexes, semanticChildCount: this.widget.semanticChildCount, padding: this.widget.padding, addAutomaticKeepAlives: this.widget.addAutomaticKeepAlives, addRepaintBoundaries: this.widget.addRepaintBoundaries, $creationLocationd_0dea112b090073317d4: C[51] || CT.C51}), $creationLocationd_0dea112b090073317d4: C[69] || CT.C69}), $creationLocationd_0dea112b090073317d4: C[73] || CT.C73}), $creationLocationd_0dea112b090073317d4: C[77] || CT.C77})]);
+                if (dart.test(this[_isTransitioning])) t1[$add](new post_mount_callback.PostMountCallback.new({key: this.secondary.key, callback: this.startAnimationCallback, child: new transitions.FadeTransition.new({opacity: this.opacity, child: new (T.NotificationListenerOfScrollNotificationL()).new({onNotification: dart.fn(_ => false, T.ScrollNotificationLToboolL()), child: new positioned_list.PositionedList.new({itemBuilder: this.widget.itemBuilder, separatorBuilder: this.widget.separatorBuilder, itemCount: this.widget.itemCount, itemPositionsNotifier: this.secondary.itemPositionsNotifier, positionedIndex: this.secondary.target, controller: this.secondary.scrollController, scrollDirection: this.widget.scrollDirection, reverse: this.widget.reverse, cacheExtent: cacheExtent, alignment: this.secondary.alignment, physics: this.widget.physics, addSemanticIndexes: this.widget.addSemanticIndexes, semanticChildCount: this.widget.semanticChildCount, padding: this.widget.padding, addAutomaticKeepAlives: this.widget.addAutomaticKeepAlives, addRepaintBoundaries: this.widget.addRepaintBoundaries, $creationLocationd_0dea112b090073317d4: C[82] || CT.C82}), $creationLocationd_0dea112b090073317d4: C[100] || CT.C100}), $creationLocationd_0dea112b090073317d4: C[104] || CT.C104}), $creationLocationd_0dea112b090073317d4: C[108] || CT.C108}));
+                return t1;
+              })(), $creationLocationd_0dea112b090073317d4: C[113] || CT.C113}), $creationLocationd_0dea112b090073317d4: C[116] || CT.C116});
+        }, T.BuildContextLAndBoxConstraintsLToGestureDetectorL()), $creationLocationd_0dea112b090073317d4: C[121] || CT.C121});
+    }
+    [_cacheExtent](constraints) {
+      let t2;
+      return math.max(T.doubleL(), dart.notNull(constraints.maxHeight) * 2, (t2 = this.widget.minCacheExtent, t2 == null ? 0.0 : t2));
+    }
+    [_jumpTo](opts) {
+      let index = opts && 'index' in opts ? opts.index : null;
+      let alignment = opts && 'alignment' in opts ? opts.alignment : null;
+      this[_stopScroll]({canceled: true});
+      if (dart.notNull(index) > dart.notNull(this.widget.itemCount) - 1) {
+        index = dart.notNull(this.widget.itemCount) - 1;
+      }
+      this.setState(dart.fn(() => {
+        this.primary.scrollController.jumpTo(0.0);
+        this.primary.target = index;
+        this.primary.alignment = alignment;
+      }, T.VoidToNull()));
+    }
+    [_scrollTo](opts) {
+      let index = opts && 'index' in opts ? opts.index : null;
+      let alignment = opts && 'alignment' in opts ? opts.alignment : null;
+      let duration = opts && 'duration' in opts ? opts.duration : null;
+      let curve = opts && 'curve' in opts ? opts.curve : C[46] || CT.C46;
+      let opacityAnimationWeights = opts && 'opacityAnimationWeights' in opts ? opts.opacityAnimationWeights : null;
+      return async.async(dart.void, (function* _scrollTo() {
+        if (dart.notNull(index) > dart.notNull(this.widget.itemCount) - 1) {
+          index = dart.notNull(this.widget.itemCount) - 1;
+        }
+        if (dart.test(this[_isTransitioning])) {
+          this[_stopScroll]({canceled: true});
+          binding.SchedulerBinding.instance.addPostFrameCallback(dart.fn(_ => {
+            this[_startScroll]({index: index, alignment: alignment, duration: duration, curve: curve, opacityAnimationWeights: opacityAnimationWeights});
+          }, T.DurationLToNull()));
+        } else {
+          yield this[_startScroll]({index: index, alignment: alignment, duration: duration, curve: curve, opacityAnimationWeights: opacityAnimationWeights});
+        }
+      }).bind(this));
+    }
+    [_startScroll](opts) {
+      let index = opts && 'index' in opts ? opts.index : null;
+      let alignment = opts && 'alignment' in opts ? opts.alignment : null;
+      let duration = opts && 'duration' in opts ? opts.duration : null;
+      let curve = opts && 'curve' in opts ? opts.curve : C[46] || CT.C46;
+      let opacityAnimationWeights = opts && 'opacityAnimationWeights' in opts ? opts.opacityAnimationWeights : null;
+      return async.async(dart.void, (function* _startScroll() {
+        let direction = dart.notNull(index) > dart.notNull(this.primary.target) ? 1 : -1;
+        let itemPosition = this.primary.itemPositionsNotifier.itemPositions.value[$firstWhere](dart.fn(itemPosition => itemPosition.index == index, T.ItemPositionLToboolL()), {orElse: dart.fn(() => null, T.VoidToNull())});
+        if (itemPosition != null) {
+          let localScrollAmount = dart.notNull(itemPosition.itemLeadingEdge) * dart.notNull(this.primary.scrollController.position.viewportDimension);
+          yield this.primary.scrollController.animateTo(dart.notNull(this.primary.scrollController.offset) + localScrollAmount - dart.notNull(alignment) * dart.notNull(this.primary.scrollController.position.viewportDimension), {duration: duration, curve: curve});
+        } else {
+          let scrollAmount = 2 * dart.notNull(this.primary.scrollController.position.viewportDimension);
+          let startCompleter = T.CompleterOfvoid().new();
+          let endCompleter = T.CompleterOfvoid().new();
+          this.startAnimationCallback = dart.fn(() => {
+            binding.SchedulerBinding.instance.addPostFrameCallback(dart.fn(_ => {
+              let t2;
+              this.startAnimationCallback = dart.fn(() => {
+              }, T.VoidToNull());
+              this.opacity.parent = this[_opacityAnimation](opacityAnimationWeights).animate((t2 = new animation_controller.AnimationController.new({vsync: this, duration: duration}), (() => {
+                t2.forward();
+                return t2;
+              })()));
+              this.secondary.scrollController.jumpTo(-direction * (2 * dart.notNull(this.primary.scrollController.position.viewportDimension) - dart.notNull(alignment) * dart.notNull(this.secondary.scrollController.position.viewportDimension)));
+              startCompleter.complete(this.primary.scrollController.animateTo(dart.notNull(this.primary.scrollController.offset) + direction * scrollAmount, {duration: duration, curve: curve}));
+              endCompleter.complete(this.secondary.scrollController.animateTo(0.0, {duration: duration, curve: curve}));
+            }, T.DurationLToNull()));
+          }, T.VoidToNull());
+          this.setState(dart.fn(() => {
+            this.secondary.target = index;
+            this.secondary.alignment = alignment;
+            this[_isTransitioning] = true;
+          }, T.VoidToNull()));
+          yield async.Future.wait(dart.void, T.JSArrayOfFutureLOfvoid().of([startCompleter.future, endCompleter.future]));
+          this[_stopScroll]();
+        }
+      }).bind(this));
+    }
+    [_stopScroll](opts) {
+      let canceled = opts && 'canceled' in opts ? opts.canceled : false;
+      if (!dart.test(this[_isTransitioning])) {
+        return;
+      }
+      if (dart.test(canceled)) {
+        if (dart.test(this.primary.scrollController.hasClients)) {
+          this.primary.scrollController.jumpTo(this.primary.scrollController.offset);
+        }
+        if (dart.test(this.secondary.scrollController.hasClients)) {
+          this.secondary.scrollController.jumpTo(this.secondary.scrollController.offset);
+        }
+      }
+      this.setState(dart.fn(() => {
+        if (dart.notNull(this.opacity.value) >= 0.5) {
+          let temp = this.primary;
+          this.primary = this.secondary;
+          this.secondary = temp;
+        }
+        this[_isTransitioning] = false;
+        this.opacity.parent = C[50] || CT.C50;
+      }, T.VoidToNull()));
+    }
+    [_opacityAnimation](opacityAnimationWeights) {
+      let startOpacity = 0.0;
+      let endOpacity = 1.0;
+      return new (T.TweenSequenceOfdoubleL()).new(T.JSArrayOfTweenSequenceItemLOfdoubleL().of([new (T.TweenSequenceItemOfdoubleL()).new({tween: new (T.ConstantTweenOfdoubleL()).new(startOpacity), weight: opacityAnimationWeights[$_get](0)}), new (T.TweenSequenceItemOfdoubleL()).new({tween: new (T.TweenOfdoubleL()).new({begin: startOpacity, end: endOpacity}), weight: opacityAnimationWeights[$_get](1)}), new (T.TweenSequenceItemOfdoubleL()).new({tween: new (T.ConstantTweenOfdoubleL()).new(endOpacity), weight: opacityAnimationWeights[$_get](2)})]));
+    }
+    [_updatePositions]() {
+      let t2, t2$;
+      let itemPositions = this.primary.itemPositionsNotifier.itemPositions.value[$where](dart.fn(position => dart.notNull(position.itemLeadingEdge) < 1 && dart.notNull(position.itemTrailingEdge) > 0, T.ItemPositionLToboolL()));
+      if (dart.test(itemPositions[$isNotEmpty])) {
+        page_storage.PageStorage.of(this.context).writeState(this.context, itemPositions[$reduce](dart.fn((value, element) => dart.notNull(value.itemLeadingEdge) < dart.notNull(element.itemLeadingEdge) ? value : element, T.ItemPositionLAndItemPositionLToItemPositionL())));
+      }
+      t2$ = (t2 = this.widget.itemPositionsNotifier, t2 == null ? null : t2.itemPositions);
+      t2$ == null ? null : t2$.value = itemPositions;
+    }
+  };
+  (scrollable_positioned_list._ScrollablePositionedListState.new = function() {
+    this.primary = new scrollable_positioned_list._ListDisplayDetails.new(C[48] || CT.C48);
+    this.secondary = new scrollable_positioned_list._ListDisplayDetails.new(C[49] || CT.C49);
+    this.opacity = new animations.ProxyAnimation.new(C[50] || CT.C50);
+    this.startAnimationCallback = dart.fn(() => {
+    }, T.VoidToNull());
+    this[_isTransitioning] = false;
+    scrollable_positioned_list._ScrollablePositionedListState.__proto__.new.call(this);
+    ;
+  }).prototype = scrollable_positioned_list._ScrollablePositionedListState.prototype;
+  dart.addTypeTests(scrollable_positioned_list._ScrollablePositionedListState);
+  dart.addTypeCaches(scrollable_positioned_list._ScrollablePositionedListState);
+  dart.setMethodSignature(scrollable_positioned_list._ScrollablePositionedListState, () => ({
+    __proto__: dart.getMethods(scrollable_positioned_list._ScrollablePositionedListState.__proto__),
+    didUpdateWidget: dart.fnType(dart.void, [dart.legacy(core.Object)]),
+    build: dart.fnType(dart.legacy(framework.Widget), [dart.legacy(framework.BuildContext)]),
+    [_cacheExtent]: dart.fnType(dart.legacy(core.double), [dart.legacy(box.BoxConstraints)]),
+    [_jumpTo]: dart.fnType(dart.void, [], {alignment: dart.legacy(core.double), index: dart.legacy(core.int)}, {}),
+    [_scrollTo]: dart.fnType(dart.legacy(async.Future$(dart.void)), [], {alignment: dart.legacy(core.double), curve: dart.legacy(curves.Curve), duration: dart.legacy(core.Duration), index: dart.legacy(core.int), opacityAnimationWeights: dart.legacy(core.List$(dart.legacy(core.double)))}, {}),
+    [_startScroll]: dart.fnType(dart.legacy(async.Future$(dart.void)), [], {alignment: dart.legacy(core.double), curve: dart.legacy(curves.Curve), duration: dart.legacy(core.Duration), index: dart.legacy(core.int), opacityAnimationWeights: dart.legacy(core.List$(dart.legacy(core.double)))}, {}),
+    [_stopScroll]: dart.fnType(dart.void, [], {canceled: dart.legacy(core.bool)}, {}),
+    [_opacityAnimation]: dart.fnType(dart.legacy(tween.Animatable$(dart.legacy(core.double))), [dart.legacy(core.List$(dart.legacy(core.double)))]),
+    [_updatePositions]: dart.fnType(dart.void, [])
+  }));
+  dart.setLibraryUri(scrollable_positioned_list._ScrollablePositionedListState, I[3]);
+  dart.setFieldSignature(scrollable_positioned_list._ScrollablePositionedListState, () => ({
+    __proto__: dart.getFields(scrollable_positioned_list._ScrollablePositionedListState.__proto__),
+    primary: dart.fieldType(dart.legacy(scrollable_positioned_list._ListDisplayDetails)),
+    secondary: dart.fieldType(dart.legacy(scrollable_positioned_list._ListDisplayDetails)),
+    opacity: dart.finalFieldType(dart.legacy(animations.ProxyAnimation)),
+    startAnimationCallback: dart.fieldType(dart.legacy(dart.fnType(dart.void, []))),
+    [_isTransitioning]: dart.fieldType(dart.legacy(core.bool))
+  }));
+  scrollable_positioned_list._ListDisplayDetails = class _ListDisplayDetails extends core.Object {};
+  (scrollable_positioned_list._ListDisplayDetails.new = function(key) {
+    this.itemPositionsNotifier = new item_positions_notifier.ItemPositionsNotifier.new();
+    this.scrollController = new scroll_controller.ScrollController.new({keepScrollOffset: false});
+    this.target = 0;
+    this.alignment = 0.0;
+    this.key = key;
+    ;
+  }).prototype = scrollable_positioned_list._ListDisplayDetails.prototype;
+  dart.addTypeTests(scrollable_positioned_list._ListDisplayDetails);
+  dart.addTypeCaches(scrollable_positioned_list._ListDisplayDetails);
+  dart.setLibraryUri(scrollable_positioned_list._ListDisplayDetails, I[3]);
+  dart.setFieldSignature(scrollable_positioned_list._ListDisplayDetails, () => ({
+    __proto__: dart.getFields(scrollable_positioned_list._ListDisplayDetails.__proto__),
+    itemPositionsNotifier: dart.finalFieldType(dart.legacy(item_positions_notifier.ItemPositionsNotifier)),
+    scrollController: dart.finalFieldType(dart.legacy(scroll_controller.ScrollController)),
+    target: dart.fieldType(dart.legacy(core.int)),
+    alignment: dart.fieldType(dart.legacy(core.double)),
+    key: dart.finalFieldType(dart.legacy(key.Key))
+  }));
+  dart.defineLazy(scrollable_positioned_list, {
+    /*scrollable_positioned_list._screenScrollCount*/get _screenScrollCount() {
+      return 2;
+    }
+  }, true);
+  var itemPositions = dart.privateName(item_positions_notifier, "ItemPositionsNotifier.itemPositions");
+  item_positions_notifier.ItemPositionsNotifier = class ItemPositionsNotifier extends core.Object {
+    get itemPositions() {
+      return this[itemPositions];
+    }
+    set itemPositions(value) {
+      super.itemPositions = value;
+    }
+  };
+  (item_positions_notifier.ItemPositionsNotifier.new = function() {
+    this[itemPositions] = new (T.ValueNotifierOfIterableLOfItemPositionL()).new(T.JSArrayOfItemPositionL().of([]));
+    ;
+  }).prototype = item_positions_notifier.ItemPositionsNotifier.prototype;
+  dart.addTypeTests(item_positions_notifier.ItemPositionsNotifier);
+  dart.addTypeCaches(item_positions_notifier.ItemPositionsNotifier);
+  item_positions_notifier.ItemPositionsNotifier[dart.implements] = () => [item_positions_listener.ItemPositionsListener];
+  dart.setLibraryUri(item_positions_notifier.ItemPositionsNotifier, I[4]);
+  dart.setFieldSignature(item_positions_notifier.ItemPositionsNotifier, () => ({
+    __proto__: dart.getFields(item_positions_notifier.ItemPositionsNotifier.__proto__),
+    itemPositions: dart.finalFieldType(dart.legacy(change_notifier.ValueNotifier$(dart.legacy(core.Iterable$(dart.legacy(item_positions_listener.ItemPosition))))))
+  }));
+  item_positions_listener.ItemPositionsListener = class ItemPositionsListener extends core.Object {
+    static create() {
+      return new item_positions_notifier.ItemPositionsNotifier.new();
+    }
+  };
+  (item_positions_listener.ItemPositionsListener[dart.mixinNew] = function() {
+  }).prototype = item_positions_listener.ItemPositionsListener.prototype;
+  dart.addTypeTests(item_positions_listener.ItemPositionsListener);
+  dart.addTypeCaches(item_positions_listener.ItemPositionsListener);
+  dart.setLibraryUri(item_positions_listener.ItemPositionsListener, I[5]);
+  var index$ = dart.privateName(item_positions_listener, "ItemPosition.index");
+  var itemLeadingEdge$ = dart.privateName(item_positions_listener, "ItemPosition.itemLeadingEdge");
+  var itemTrailingEdge$ = dart.privateName(item_positions_listener, "ItemPosition.itemTrailingEdge");
+  item_positions_listener.ItemPosition = class ItemPosition extends core.Object {
+    get index() {
+      return this[index$];
+    }
+    set index(value) {
+      super.index = value;
+    }
+    get itemLeadingEdge() {
+      return this[itemLeadingEdge$];
+    }
+    set itemLeadingEdge(value) {
+      super.itemLeadingEdge = value;
+    }
+    get itemTrailingEdge() {
+      return this[itemTrailingEdge$];
+    }
+    set itemTrailingEdge(value) {
+      super.itemTrailingEdge = value;
+    }
+    _equals(other) {
+      if (other == null) return false;
+      if (!dart.equals(dart.runtimeType(other), this.runtimeType)) return false;
+      let otherPosition = T.ItemPositionL().as(other);
+      return otherPosition.index == this.index && otherPosition.itemLeadingEdge == this.itemLeadingEdge && otherPosition.itemTrailingEdge == this.itemTrailingEdge;
+    }
+    get hashCode() {
+      return 31 * (31 * (7 + dart.hashCode(this.index)) + dart.hashCode(this.itemLeadingEdge)) + dart.hashCode(this.itemTrailingEdge);
+    }
+    toString() {
+      return "ItemPosition(index: " + dart.str(this.index) + ", itemLeadingEdge: " + dart.str(this.itemLeadingEdge) + ", itemTrailingEdge: " + dart.str(this.itemTrailingEdge) + ")";
+    }
+  };
+  (item_positions_listener.ItemPosition.new = function(opts) {
+    let index = opts && 'index' in opts ? opts.index : null;
+    let itemLeadingEdge = opts && 'itemLeadingEdge' in opts ? opts.itemLeadingEdge : null;
+    let itemTrailingEdge = opts && 'itemTrailingEdge' in opts ? opts.itemTrailingEdge : null;
+    this[index$] = index;
+    this[itemLeadingEdge$] = itemLeadingEdge;
+    this[itemTrailingEdge$] = itemTrailingEdge;
+    ;
+  }).prototype = item_positions_listener.ItemPosition.prototype;
+  dart.addTypeTests(item_positions_listener.ItemPosition);
+  dart.addTypeCaches(item_positions_listener.ItemPosition);
+  dart.setMethodSignature(item_positions_listener.ItemPosition, () => ({
+    __proto__: dart.getMethods(item_positions_listener.ItemPosition.__proto__),
+    _equals: dart.fnType(dart.legacy(core.bool), [dart.dynamic]),
+    [$_equals]: dart.fnType(dart.legacy(core.bool), [dart.dynamic]),
+    toString: dart.fnType(dart.legacy(core.String), []),
+    [$toString]: dart.fnType(dart.legacy(core.String), [])
+  }));
+  dart.setGetterSignature(item_positions_listener.ItemPosition, () => ({
+    __proto__: dart.getGetters(item_positions_listener.ItemPosition.__proto__),
+    hashCode: dart.legacy(core.int),
+    [$hashCode]: dart.legacy(core.int)
+  }));
+  dart.setLibraryUri(item_positions_listener.ItemPosition, I[5]);
+  dart.setFieldSignature(item_positions_listener.ItemPosition, () => ({
+    __proto__: dart.getFields(item_positions_listener.ItemPosition.__proto__),
+    index: dart.finalFieldType(dart.legacy(core.int)),
+    itemLeadingEdge: dart.finalFieldType(dart.legacy(core.double)),
+    itemTrailingEdge: dart.finalFieldType(dart.legacy(core.double))
+  }));
+  dart.defineExtensionMethods(item_positions_listener.ItemPosition, ['_equals', 'toString']);
+  dart.defineExtensionAccessors(item_positions_listener.ItemPosition, ['hashCode']);
+  dart.trackLibraries("packages/scrollable_positioned_list/src/positioned_list.dart", {
+    "package:scrollable_positioned_list/src/positioned_list.dart": positioned_list,
+    "package:scrollable_positioned_list/src/scrollable_positioned_list.dart": scrollable_positioned_list,
+    "package:scrollable_positioned_list/src/item_positions_notifier.dart": item_positions_notifier,
+    "package:scrollable_positioned_list/src/item_positions_listener.dart": item_positions_listener
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["positioned_list.dart","scrollable_positioned_list.dart","item_positions_notifier.dart","item_positions_listener.dart"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;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","file":"../../../../../../../../packages/scrollable_positioned_list/src/positioned_list.dart.lib.js"}');
+  // Exports:
+  return {
+    src__positioned_list: positioned_list,
+    src__scrollable_positioned_list: scrollable_positioned_list,
+    src__item_positions_notifier: item_positions_notifier,
+    src__item_positions_listener: item_positions_listener
+  };
+}));
+
+//# sourceMappingURL=positioned_list.dart.lib.js.map

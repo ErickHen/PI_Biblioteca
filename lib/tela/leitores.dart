@@ -31,74 +31,70 @@ class TabelaDemoState extends State<TabelaDemo> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          content: Text('Cadastre um novo leitor'),
+          content: Text('Criar reserva'),
           actions: <Widget>[
             SizedBox(
               width: 600,
             ),
             TextButton(
                 child: Column(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Nome:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Insira o leitor"),
                       controller: _nomeController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    SizedBox(height: 50),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Telefone:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                    TextFormField(
+                      decoration:
+                          InputDecoration(labelText: "Insira um Telefone"),
                       controller: _telefoneController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    SizedBox(height: 50),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Tipo:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Insira um Tipo"),
                       controller: _tipoController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    SizedBox(height: 50),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Data:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "dia/mês/ano"),
                       controller: _datasController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    SizedBox(height: 50),
-                    TextButton(
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Text(
-                          "Salvar",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      onPressed: () {
-                        _addPessoa();
-                      },
-                    )
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            if (_nomeController.text == "" ||
+                                _telefoneController.text == "" ||
+                                _tipoController.text == "" ||
+                                _datasController.text == "") {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text("ERRO"),
+                                  content:
+                                      Text("Preencha os campos corretamente"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("OK")),
+                                  ],
+                                ),
+                              );
+                            }
+                          },
+                          child: TextButton(
+                            child: Text(
+                              "Salvar",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () {
+                              _addPessoa();
+                            },
+                          )),
+                    ),
                   ],
                 ),
                 onPressed: () {
@@ -212,10 +208,11 @@ class TabelaDemoState extends State<TabelaDemo> {
               style: TextStyle(color: Colors.black),
             )),
             DataColumn(
-                label: Text(
-              'Deletar',
-              style: TextStyle(color: Colors.black),
-            )),
+              label: Text(
+                'Deletar',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
           ],
           rows: _videoaula
               .map((videoaula) => DataRow(cells: [

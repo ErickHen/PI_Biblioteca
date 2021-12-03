@@ -8,6 +8,7 @@ import 'package:portfolio_website/tela/idioma.dart';
 import 'package:portfolio_website/tela/leitores.dart';
 import 'package:portfolio_website/tela/consultaLeitores.dart';
 import 'package:portfolio_website/tela/livros.dart';
+import 'package:portfolio_website/tela/telaconsulta.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,13 +25,14 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/leitores': (context) => TabelaDemo(),
-        '/consultaLeitores': (context) => TabelaDemo2(),
+        '/consultaLeitores': (context) => TabelaDemo4(),
         '/autores': (context) => TabelaDemo3(),
-        '/consultaAutores': (context) => TabelaDemo4(),
+        '/consultaAutores': (context) => TabelaDemo2(),
         '/categoria': (context) => TabelaDemo5(),
         '/idioma': (context) => TabelaDemo6(),
         '/editora': (context) => TabelaDemo7(),
         '/livros': (context) => TabelaDemo8(),
+        '/telaconsulta': (context) => TabelaDemo9(),
       },
       theme: ThemeData(
           fontFamily: 'Barlow',

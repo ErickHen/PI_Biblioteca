@@ -33,6 +33,8 @@ dependencies:
   scrollable_positioned_list: ^0.1.10
   hovering: ^1.0.4
   http: "^0.13.4"
+  modal_bottom_sheet: ^2.0.0
+  brasil_fields: 1.3.0
 
 dev_dependencies:
   flutter_test:

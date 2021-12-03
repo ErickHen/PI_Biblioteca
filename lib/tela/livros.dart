@@ -39,78 +39,70 @@ class TabelaDemoState extends State<TabelaDemo8> {
             ),
             TextButton(
                 child: Column(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Código:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                  children: [
+                    TextFormField(
+                      decoration:
+                          InputDecoration(labelText: "Insira um Código"),
                       controller: _codigoController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    SizedBox(height: 50),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Livro:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Insira um Livro"),
                       controller: _livroController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    SizedBox(height: 50),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Autor:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Insira um Autor"),
                       controller: _autorController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    SizedBox(height: 50),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Localização:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                    TextFormField(
+                      decoration:
+                          InputDecoration(labelText: "Insira uma Localização"),
                       controller: _localizacaoController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    SizedBox(height: 50),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Disponibilidade:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Disponibilidade"),
                       controller: _disponibilidadeController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    TextButton(
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Text(
-                          "Salvar",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      onPressed: () {
-                        _addPessoa();
-                      },
-                    )
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            if (_codigoController.text == "" ||
+                                _livroController.text == "" ||
+                                _autorController.text == "" ||
+                                _localizacaoController.text == "" ||
+                                _disponibilidadeController.text == "") {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text("ERRO"),
+                                  content:
+                                      Text("Preencha os campos corretamente"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("OK")),
+                                  ],
+                                ),
+                              );
+                            }
+                          },
+                          child: TextButton(
+                            child: Text(
+                              "Salvar",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () {
+                              _addPessoa();
+                            },
+                          )),
+                    ),
                   ],
                 ),
                 onPressed: () {

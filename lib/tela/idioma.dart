@@ -37,44 +37,50 @@ class TabelaDemoState extends State<TabelaDemo6> {
             ),
             TextButton(
                 child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 50),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Idioma:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Insira o leitor"),
                       controller: _idiomasController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    SizedBox(height: 50),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Data:",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    TextField(
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "dia/mês/ano"),
                       controller: _datasController,
                       style: TextStyle(color: Colors.black),
                     ),
-                    SizedBox(height: 50),
-                    TextButton(
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Text(
-                          "Salvar",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      onPressed: () {
-                        _addPessoa();
-                      },
-                    )
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            if (_idiomasController.text == "" ||
+                                _datasController.text == "") {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text("ERRO"),
+                                  content:
+                                      Text("Preencha os campos corretamente"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("OK")),
+                                  ],
+                                ),
+                              );
+                            }
+                          },
+                          child: TextButton(
+                            child: Text(
+                              "Salvar",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () {
+                              _addPessoa();
+                            },
+                          )),
+                    ),
                   ],
                 ),
                 onPressed: () {

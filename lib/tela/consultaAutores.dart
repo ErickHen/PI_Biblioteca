@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 class TabelaDemo2 extends StatefulWidget {
   TabelaDemo2() : super();
-  final String title = 'Nesta página voce irá cadastrar um novo leitor';
+  final String title = 'Nesta página voce irá consultar um autor';
 
   @override
   TabelaDemoState createState() => TabelaDemoState();
@@ -107,16 +107,6 @@ class TabelaDemoState extends State<TabelaDemo2> {
             DataColumn(
                 label: Text(
               'Nome',
-              style: TextStyle(color: Colors.black),
-            )),
-            DataColumn(
-                label: Text(
-              'Telefone',
-              style: TextStyle(color: Colors.black),
-            )),
-            DataColumn(
-                label: Text(
-              'Tipo',
               style: TextStyle(color: Colors.black),
             )),
             DataColumn(

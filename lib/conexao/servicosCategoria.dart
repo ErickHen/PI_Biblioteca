@@ -33,12 +33,12 @@ class Servicos {
   }
 
   //add pessoa
-  static Future<String> addPessoa(String datas, String categoria) async {
+  static Future<String> addPessoa(String categoria, String datas) async {
     try {
       var map = Map<String, dynamic>();
       map['acao'] = _ADD_PESSOA;
-      map['datas'] = datas;
       map['categoria'] = categoria;
+      map['datas'] = datas;
 
       final resposta = await http.post(Uri.parse(URI), body: map);
       print('addPESSOA -> Resposta :: ${resposta.body}');

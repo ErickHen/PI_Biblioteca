@@ -1,3 +1,4 @@
-2021/11/19-15:04:49.367 3218 Reusing MANIFEST C:\Users\PICHAU\AppData\Local\Temp\flutter_tools.9a06e349\flutter_tools_chrome_device.e516b0f9\Default\Site Characteristics Database/MANIFEST-000001
-2021/11/19-15:04:49.367 3218 Recovering log #3
-2021/11/19-15:04:49.367 3218 Reusing old log C:\Users\PICHAU\AppData\Local\Temp\flutter_tools.9a06e349\flutter_tools_chrome_device.e516b0f9\Default\Site Characteristics Database/000003.log 
+2021/12/02-04:41:49.109 2eec Reusing MANIFEST C:\Users\PICHAU\AppData\Local\Temp\flutter_tools.75464b9a\flutter_tools_chrome_device.6e2fb0dd\Default\Site Characteristics Database/MANIFEST-000001
+2021/12/02-04:41:49.109 2eec Recovering log #3
+2021/12/02-04:41:49.109 2eec (ignoring error) C:\Users\PICHAU\AppData\Local\Temp\flutter_tools.75464b9a\flutter_tools_chrome_device.6e2fb0dd\Default\Site Characteristics Database/000003.log: dropping 601 bytes; Corruption: checksum mismatch
+2021/12/02-04:41:49.109 2eec Reusing old log C:\Users\PICHAU\AppData\Local\Temp\flutter_tools.75464b9a\flutter_tools_chrome_device.6e2fb0dd\Default\Site Characteristics Database/000003.log 

@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage>
       content: ProjectsView(), //Chamanado a view
     ),
     ContentView(
-      tab: CustomTab(title: 'Reservas e emprétimos'),
+      tab: CustomTab(title: 'Reservas e empréstimos '),
       content: ReservaEmprestimoView(), //Chamanado a view
     ),
   ];

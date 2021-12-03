@@ -3,13 +3,13 @@ class VideoAula {
   String datas;
   String categoria;
 
-  VideoAula({this.id, this.datas, this.categoria});
+  VideoAula({this.id, this.categoria, this.datas});
 
   factory VideoAula.fromjson(Map<String, dynamic> json) {
     return VideoAula(
       id: json['id'] as String,
-      datas: json['datas'] as String,
       categoria: json['categoria'] as String,
+      datas: json['datas'] as String,
     );
   }
 }

@@ -90,6 +90,13 @@ class _ReservaEmprestimoViewState extends State<ReservaEmprestimoView> {
                           },
                           child: Text('Cadastrar'),
                         ),
+                        SizedBox(height: 215),
+                        RaisedButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/telaconsulta');
+                          },
+                          child: Text('Cadastrar'),
+                        ),
                       ],
                     ),
                     AnimatedAlign(
